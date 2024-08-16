@@ -45,26 +45,26 @@ public:
      *
      * @return - level of the player
      */
-    int getLevel() const; //DAVID
+    int getLevel() const;
 
     /**
      * Gets the of force the player has
      *
      * @return - force points of the player
      */
-    int getForce() const; //DAVID
+    int getForce() const;
 
     /**
      * Gets the amount of health points the player currently has
      *
      * @return - health points of the player
      */
-    int getHealthPoints() const; //DAVID
+    int getHealthPoints() const;
 
     /**
      * Gets the amount of coins the player has
      *
      * @return - coins of the player
      */
-    int getCoins() const; //DAVID
+    int getCoins() const;
 };
