@@ -2,15 +2,22 @@
 #pragma once
 
 #include <iostream>
-
+#include <vector>
 #include "Players/Player.h"
 #include "Events/Event.h"
+#include "Events/Factories/SnailFactory.h"
+#include "Events/Factories/BalrogFactory.h"
+#include "Events/Factories/BalrogFactory.h"
+#include "Players/Factories/WarriorFactory.h"
+
+
 
 
 class MatamStory{
 private:
     unsigned int m_turnIndex;
-
+    std::vector<std::shared_ptr<Event>> eventsList;
+    std::vector<std::shared_ptr<Event>> playersList;
     /**
      * Playes a single turn for a player
      *
@@ -33,6 +40,11 @@ private:
      * @return - true if the game is over, false otherwise
     */
     bool isGameOver() const;
+
+    string getNextWord(string str);
+    std::shared_ptr<Monster> monsterFromString(string str);
+    std::unique_ptr<Job> jobFromString(string str);
+    std::unique_ptr<Character> characterFromString(string str);
 
 public:
     /**

@@ -10,4 +10,3 @@ class SolarEclipseFactory: public EventFactory{
             return std::make_shared<SolarEclipse>();
         }
 };
-

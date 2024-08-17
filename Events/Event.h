@@ -2,6 +2,7 @@
 
 #include "../Players/Player.h"
 #include <Monster.h>
+#include <vector>
 
 class Event {
 public:

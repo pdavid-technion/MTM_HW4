@@ -3,7 +3,6 @@
 #include <memory>
 #include <stdexcept>
 
-
 class Monster{
     public:
         virtual ~Monster() = default;
