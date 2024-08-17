@@ -14,6 +14,7 @@ private:
     int level;
     int force;
     int healthPoints;
+    int maxHealthPoints;
     int coins;
     std::unique_ptr<Job> job;
     std::unique_ptr<Character> character;
@@ -23,6 +24,7 @@ public:
             int level = 1,
             int force = 10,
             int healthPoints = 100,
+            int maxHealthPoints = 100,
             int coins = 10,
             std::unique_ptr<JobFactory> jobFactory,
             std::unique_ptr<CharacterFactory> characterFactory);
@@ -67,4 +69,12 @@ public:
      * @return - coins of the player
      */
     int getCoins() const;
+
+    int getCombatPower() const;
+
+    void winMonster( int loot );
+
+    void loseToMonster( int damage );
+
+    void closeEncounter();
 };

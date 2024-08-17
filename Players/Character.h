@@ -1,19 +1,23 @@
 #pragma once
 
 #include <Player.h>
+#include <../Events/Event.h>
 
 class Character{
     public:
-        virtual void reactToEvent(Event& event, Player& player) const = 0; //TODO - SHELLY - Add event+player
+        virtual void reactToSolarEclipse(Event& event, Player& player) const = 0;
+        virtual void reactToPotionsMerchant(Event& event, Player& player) const = 0;
 };
 
 class Responsible: public Character{
     public:
-        void reactToEvent(Event& event, Player& player) const override;
+        void reactToSolarEclipse(Event& event, Player& player) const override;
+        void reactToPotionsMerchant(Event& event, Player& player) const override;
 };
 
 class RiskTaking : public Character
 {
 public:
-    void reactToEvent(Event &event, Player &player) const override;
+    void reactToSolarEclipse(Event &event, Player &player) const override;
+    void reactToPotionsMerchant(Event& event, Player& player) const override;
 };
