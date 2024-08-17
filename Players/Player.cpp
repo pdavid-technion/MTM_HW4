@@ -68,3 +68,8 @@ void Player::applyDarknessMagic(){
 int Player::getMaxHealthPoints(){
      return this->job->getMaxHealthPoints();
 }
+
+void Player::buyPotions(int potionAmount){
+    this->healthPoints = std::max(this->getMaxHealthPoints(), this->getHealthPoints() + potionAmount * 10 );
+    this->job->setCoins(this->getCoins() - potionAmount * 5);
+}

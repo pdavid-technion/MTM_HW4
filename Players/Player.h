@@ -79,4 +79,6 @@ public:
     void applyDarknessMagic();
 
     int getMaxHealthPoints();
+
+    void buyPotions(int potionAmount);
 };
