@@ -1,26 +1,38 @@
 
 #include "MatamStory.h"
-
 #include "Utilities.h"
+#include <../Events/Factories/MonsterFactory.h>
+#include <../Events/Factories/SingleMonsterFactory.h>
+#include <../Events/Factories/SnailFactory.h>
+#include <../Events/Factories/SlimeFactory.h>
+#include <../Events/Factories/BalrogFactory.h>
+#include<../Players/Factories/WarriorFactory.h>
+#include<../Players/Factories/MagicianFactory.h>
+#include<../Players/Factories/ArcherFactory.h>
+#include<../Players/Factories/ResponsibleFactory.h>
+#include<../Players/Factories/RiskTakingFactory.h>
 
 
-string getNextWord(string str) {
+string getNextWord(string line) {
     string word = line.substr(0, line.find(" "));
-    str.erase(0, line.find(" ") + 1);
-    retrun word;
+    line.erase(0, line.find(" ") + 1);
+    return word;
 }
 
 std::shared_ptr<Monster> monsterFromString(string str)
 {
     std::shared_ptr<Monster> monster = nullptr;
     if(str == "Snail") {
-        monster = MonsterFactory::SingleMonsterFactory::SnailFactory::createMonster();
+        SnailFactory snailFactory;
+        monster = snailFactory.createMonster();
     }
     else if(str == "Balrog") {
-        monster = MonsterFactory::SingleMonsterFactory::BalrogFactory::createMonster();
+        BalrogFactory balrogFactory;
+        monster = balrogFactory.createMonster();
     }
     else if(str == "Slime") {
-        monster = MonsterFactory::SingleMonsterFactory::SlimeFactory::createMonster();
+        SlimeFactory slimeFactory;
+        monster = slimeFactory.createMonster();
     }
     return monster;
 }
@@ -28,13 +40,16 @@ std::shared_ptr<Monster> monsterFromString(string str)
 std::unique_ptr<Job> jobFromString(string str){
     std::unique_ptr<Job> job = nullptr;
     if(str == "Warrior") {
-        job = JobFactory::WarriorFactory::createJob();
+        WarriorFactory warriorFactory;
+        job = warriorFactory.createJob();
     }
     else if(str == "Magician") {
-        job = JobFactory::MagicianFactory::createJob();
+         MagicianFactory magicianFactory;
+        job = magicianFactory.createJob();
     }
     else if(str == "Archer") {
-        job = JobFactory::ArcherFactory::createJob();
+        ArcherFactory archerFactory;
+        job = archerFactory.createJob();
     }
     return job;
 }
@@ -42,10 +57,12 @@ std::unique_ptr<Job> jobFromString(string str){
 std::unique_ptr<Character> characterFromString(string str){
     std::unique_ptr<Character> character = nullptr;
     if(str == "Responsible") {
-        character = CharacterFactory::ResponsibleFactory::createCharacter();
+        ResponsibleFactory responsibleFactory;
+        character = responsibleFactory.createCharacter();
     }
     else if(str == "RiskTaking") {
-        character = CharacterFactory::RiskTakingFactory::createCharacter();
+        RiskTakingFactory riskTakingFactory;
+        character = riskTakingFactory.createCharacter();
     }
     return character;
 }
@@ -63,7 +80,7 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
             int packSize = stoi(getNextWord(line));
             for(int i=0; i < packSize; i++) {
                 if(monster = monsterFromString(getNextWord(line))) {                    
-                    pack.addMonster(monster);
+                    pack->addMonster(monster);
                 }
             }
             event = Event::MonsterEvent(pack);
