@@ -34,3 +34,7 @@ void Magician::combatMonster(Player& player, Monster& monster) const{
           player.loseToMonster(monster.getDamage());
      }
 }
+
+void Magician::reactToSolarEclipse( Player& player ) const {
+     player.applyDarknessMagic();
+}

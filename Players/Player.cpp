@@ -60,3 +60,11 @@ void Player::loseToMonster( int damage ){
 void Player::closeEncounter(){
     this->healthPoints = std::max(0, this->healthPoints - 10 ); //TODO - SHELLY - consts
 }
+
+void Player::applyDarknessConfusion(){
+    this->healthPoints = std::max(0, this->healthPoints-1);
+}
+
+void Player::applyDarknessMagic(){
+    this->healthPoints = std::min(this->maxHealthPoints, this->healthPoints+1);
+}

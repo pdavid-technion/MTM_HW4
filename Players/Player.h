@@ -77,4 +77,8 @@ public:
     void loseToMonster( int damage );
 
     void closeEncounter();
+
+    void applyDarknessConfusion();
+
+    void applyDarknessMagic();
 };
