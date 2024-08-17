@@ -1,6 +1,10 @@
 #include<Player.h>
 
-string Player::getDescription() const{return NULL;} //DAVID
+
+string Player::getDescription() const{
+    string str = name + ", " + job->printJobName() + " with " + character->printCharacterName() + " (" + level + ", " + force + ")";
+    return str;
+    } 
 
     /**
      * Gets the name of the player
