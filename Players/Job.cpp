@@ -2,22 +2,18 @@
 #include <Player.h>
 #include <../Events/Monster.h>
 
-int Warrior::calculateCombatPower(int force, int level) const {
-     return force * 2 + level;
+Job::Job(int maxHealthPoints, int coins) :maxHealthPoints(maxHealthPoints), coins(coins){}
+
+int Job::calculateCombatPower(int force, int level) const {
+        return force + level;
 }
 
-void Warrior::combatMonster(Player& player, Monster& monster) const{
-     if(player.getCombatPower() > monster.getCombatPower()){
-          player.winMonster(monster.getLoot());
-          player.closeEncounter();
-     }
-     else {
-          player.loseToMonster(monster.getDamage());
-     }
+void Job::reactToSolarEclipse( Player& player) const {
+        player.applyDarknessConfusion();
+    }
 
-}
 
-void Archer::combatMonster(Player& player, Monster& monster) const{
+void Job::combatMonster(Player& player, Monster& monster) const{
        if(player.getCombatPower() > monster.getCombatPower()){
             player.winMonster(monster.getLoot());
      }
@@ -26,15 +22,13 @@ void Archer::combatMonster(Player& player, Monster& monster) const{
      } 
 }
 
-void Magician::combatMonster(Player& player, Monster& monster) const{
-        if(player.getCombatPower() > monster.getCombatPower()){
-            player.winMonster(monster.getLoot());
-     }
-     else {
-          player.loseToMonster(monster.getDamage());
-     }
+int Job::getMaxHealthPoints(){
+     return this->maxHealthPoints;
 }
 
-void Magician::reactToSolarEclipse( Player& player ) const {
-     player.applyDarknessMagic();
+int Job::getCoins(){
+     return this->coins;
+}
+void Job::setCoins(int newCoins){
+     this->coins = newCoins;
 }

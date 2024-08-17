@@ -7,16 +7,12 @@ Player::Player( std::string name,
                 int level = 1,
                 int force = 10,
                 int healthPoints = 100,
-                int maxHealthPoints = 100,
-                int coins = 10,
                 std::unique_ptr<JobFactory> jobFactory,
                 std::unique_ptr<CharacterFactory> characterFactory):
                 name(name),
                 level(level),
                 force(force),
                 healthPoints(healthPoints),
-                maxHealthPoints(maxHealthPoints),
-                coins(coins),
                 job(jobFactory->createJob()),
                 character(characterFactory->createCharacter()) {}
 
@@ -41,7 +37,7 @@ int Player::getHealthPoints() const{
 }
 
 int Player::getCoins() const{
-    return this->coins;
+    return this->job->getCoins();
 }
 
 int Player::getCombatPower() const{
@@ -50,7 +46,7 @@ int Player::getCombatPower() const{
 
 void Player::winMonster( int loot ) {
         this->level += 1;
-        this->coins += loot;
+        this->job->setCoins(this->getCoins()+loot);
 }
 
 void Player::loseToMonster( int damage ){
@@ -66,5 +62,9 @@ void Player::applyDarknessConfusion(){
 }
 
 void Player::applyDarknessMagic(){
-    this->healthPoints = std::min(this->maxHealthPoints, this->healthPoints+1);
+    this->healthPoints = std::min(this->getMaxHealthPoints(), this->healthPoints+1);
+}
+
+int Player::getMaxHealthPoints(){
+     return this->job->getMaxHealthPoints();
 }
