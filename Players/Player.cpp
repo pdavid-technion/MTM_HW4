@@ -1,4 +1,5 @@
 #include<Player.h>
+#include <JobFactory.h>
 
 
 string Player::getDescription() const{
