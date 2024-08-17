@@ -81,4 +81,10 @@ public:
     int getMaxHealthPoints();
 
     void buyPotions(int potionAmount);
+
+    void combatMonster( Monster& monster);
+
+    void reactToSolarEclipse();
+
+    void reactToPotionsMerchant();
 };

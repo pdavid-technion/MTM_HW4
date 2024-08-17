@@ -6,14 +6,14 @@
  }
 
  void MonsterEvent::handleEvent(Player& player){
-    //Call combat monster
+    player.combatMonster(*this->monster);
 
  }
 
  void SolarEclipse::handleEvent(Player& player){
-    //call rect to solar
+    player.reactToSolarEclipse();
  }
 
  void PotionsMerchant::handleEvent(Player& player){
-    //react to potions
+    player.reactToPotionsMerchant();
  }

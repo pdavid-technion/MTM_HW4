@@ -1,6 +1,7 @@
 #include <Player.h>
 #include <JobFactory.h>
 #include <Job.h>
+#include <Character.h>
 
 
 Player::Player( std::string name,
@@ -72,4 +73,16 @@ int Player::getMaxHealthPoints(){
 void Player::buyPotions(int potionAmount){
     this->healthPoints = std::max(this->getMaxHealthPoints(), this->getHealthPoints() + potionAmount * 10 );
     this->job->setCoins(this->getCoins() - potionAmount * 5);
+}
+
+void Player::combatMonster( Monster& monster){
+    this->job->combatMonster(*this, monster);
+}
+
+void Player::reactToSolarEclipse(){
+    this->job->reactToSolarEclipse(*this);
+}
+
+void Player::reactToPotionsMerchant(){
+    this->character->reactToPotionsMerchant(*this);
 }
