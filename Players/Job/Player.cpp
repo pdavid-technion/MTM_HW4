@@ -18,11 +18,12 @@ Player::Player( std::string name,
                 character(characterFactory->createCharacter()) {}
 
 string Player::getDescription() const{
-    return "DAVID IMPLEMENT PLS";
-}
+    string str = name + ", " + job->printJobName() + " with " + character->printCharacterName() + " (" + level + ", " + force + ")";
+    return str;
+} 
 
 string Player::getName() const{
-    return "DAVID IMPLEMENT PLS";
+        return name;
 }
 
 int Player::getLevel() const{

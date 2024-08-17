@@ -5,16 +5,18 @@
 
 class Character{
     public:
-       
+        virtual string printCharacterName() const = 0;
         virtual void reactToPotionsMerchant(Player& player) const = 0;
 };
 
 class Responsible: public Character{
     public:
+        string printCharacterName() const override;
         void reactToPotionsMerchant(Player& player) const override;
 };
 
 class RiskTaking : public Character {
     public:
+        string printCharacterName() const override;
         void reactToPotionsMerchant(Player& player) const override;
 };
