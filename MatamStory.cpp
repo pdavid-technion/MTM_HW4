@@ -199,9 +199,22 @@ void MatamStory::playRound()
 
 bool MatamStory::isGameOver() const
 {
-    /*===== TODO: Implement the game over condition =====*/
-    return false; // Replace this line
-    /*===================================================*/
+    bool allPlayersDead = true;
+    bool anyPlayerLevel10OrHigher = false;
+
+    // Check the status of each player
+    for (const auto& player : playersList) {
+        if (player->getLevel() >= 10) {
+            anyPlayerLevel10OrHigher = true;
+        }
+
+        if (player->getHealthPoints() > 0) {
+            allPlayersDead = false;
+        }
+    }
+
+    // The game is over if any player reached level 10 or if all players are dead
+    return anyPlayerLevel10OrHigher || allPlayersDead;
 }
 
 void MatamStory::play()
