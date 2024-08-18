@@ -1,5 +1,6 @@
 
 #include "MatamStory.h"
+#include <MonsterPack.h>
 #include "Utilities.h"
 #include <memory>
 #include <../Events/Factories/MonsterFactory.h>
@@ -44,43 +45,6 @@ std::shared_ptr<Monster> monsterFromString(string str)
     return monster;
 }
 
-std::unique_ptr<Job> jobFromString(string str)
-{
-    std::unique_ptr<Job> job = nullptr;
-    if (str == "Warrior")
-    {
-        WarriorFactory warriorFactory;
-        job = warriorFactory.createJob();
-    }
-    else if (str == "Magician")
-    {
-        MagicianFactory magicianFactory;
-        job = magicianFactory.createJob();
-    }
-    else if (str == "Archer")
-    {
-        ArcherFactory archerFactory;
-        job = archerFactory.createJob();
-    }
-    return job;
-}
-
-std::unique_ptr<Character> characterFromString(string str)
-{
-    std::unique_ptr<Character> character = nullptr;
-    if (str == "Responsible")
-    {
-        ResponsibleFactory responsibleFactory;
-        character = responsibleFactory.createCharacter();
-    }
-    else if (str == "RiskTaking")
-    {
-        RiskTakingFactory riskTakingFactory;
-        character = riskTakingFactory.createCharacter();
-    }
-    return character;
-}
-
 std::unique_ptr<JobFactory> jobFactoryFromString(const std::string& jobType) {
     if (jobType == "Warrior") {
         return std::make_unique<WarriorFactory>();
@@ -117,17 +81,7 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
         if (firstWord == "Pack")
         {
 
-            std::shared_ptr<Monster> pack, monster;
-            int packSize = stoi(getNextWord(line));
-
-            for (int i = 0; i < packSize; i++)
-            {
-                if (monster = monsterFromString(getNextWord(line)))
-                {
-                    pack->addMonster(monster);
-                }
-            }
-
+            auto pack = parsePack(line);
             MonsterEventFactory monsterEventFactory = MonsterEventFactory(pack);
             event = monsterEventFactory.createEvent();
         }
@@ -168,6 +122,24 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
     /*============================================*/
 
     this->m_turnIndex = 1;
+}
+
+std::shared_ptr<MonsterPack> MatamStory::parsePack(string& currLine) {
+    int packSize = std::stoi(getNextWord(currLine));
+    auto pack = std::make_shared<MonsterPack>();
+
+    for (int i = 0; i < packSize; i++) {
+        string word = getNextWord(currLine);
+        if (word == "Pack") {
+            auto subPack = parsePack(currLine);
+            pack->addMonster(subPack);
+        } else {
+            auto monster = monsterFromString(word);
+            pack->addMonster(monster);
+        }
+    }
+
+    return pack;
 }
 
 void MatamStory::playTurn(Player &player)
