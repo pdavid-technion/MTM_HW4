@@ -68,13 +68,12 @@ std::unique_ptr<CharacterFactory> characterFactoryFromString(const std::string &
     }
 }
 
-MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
+readEventsFile(std::istream &eventsStream) 
 {
-
+    /*===== TODO: Open and read events file =====*/
     string line;
     string text;
     string word;
-    /*===== TODO: Open and read events file =====*/
     while (getline(eventsStream, line))
     {   
         text += line + " ";
@@ -108,9 +107,12 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
         eventsList.push_back(event);
     }
     /*==========================================*/
+}
 
+readPlayersFile(std::istream &playersStream)
+{
     /*===== TODO: Open and Read players file =====*/
-
+    string line;
     while (getline(playersStream, line))
     {
         string name = getNextWord(line);
@@ -123,7 +125,12 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
     }
 
     /*============================================*/
+}
 
+MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
+{
+    readEventsFile(eventsStream);
+    readPlayersFile(playersStream);
     this->m_turnIndex = 1;
 }
 
