@@ -191,13 +191,15 @@ void MatamStory::playRound()
     printLeaderBoardMessage();
 
     /*===== Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
-    std::sort(playersList.begin(), playersList.end(), 
+    std::vector<std::shared_ptr<Player>> sortedPlayers(playersList.begin(), playersList.end());
+
+    std::sort(sortedPlayers.begin(), sortedPlayers.end(), 
     [](const std::shared_ptr<Player>& a, const std::shared_ptr<Player>& b) {
         return *a < *b; // Use the overloaded operator< for comparison
     });
 
     unsigned int index = 1;
-    for (const auto& player : playersList) {
+    for (const auto& player : sortedPlayers) {
         printLeaderBoardEntry(index, *player);
         ++index;
     }
@@ -246,13 +248,15 @@ void MatamStory::play()
 
     printGameOver();
     /*===== Print either a "winner" message or "no winner" message =====*/
-    std::sort(playersList.begin(), playersList.end(), 
+    std::vector<std::shared_ptr<Player>> sortedPlayers(playersList.begin(), playersList.end());
+
+    std::sort(sortedPlayers.begin(), sortedPlayers.end(), 
     [](const std::shared_ptr<Player>& a, const std::shared_ptr<Player>& b) {
-        return *a < *b;
+        return *a < *b; // Use the overloaded operator< for comparison
     });
 
     bool anyPlayerWinner = false;
-    for (const auto& player : playersList) {
+    for (const auto& player : sortedPlayers) {
         if (player->getLevel() >= 10) {
             printWinner(*player);
             anyPlayerWinner = true;
