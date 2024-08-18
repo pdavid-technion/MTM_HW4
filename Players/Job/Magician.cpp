@@ -4,6 +4,8 @@
 #include <Utilities.h>
 
 //TODO - SHELLY - consts
+Magician::Magician():Job(){}
+
 string Magician::reactToSolarEclipse( Player& player ) const {
      player.applyDarknessMagic();
      return getSolarEclipseMessage(player, 1);

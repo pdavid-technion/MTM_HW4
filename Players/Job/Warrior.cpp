@@ -2,8 +2,11 @@
 #include <Player.h>
 #include <../Events/Monster.h>
 #include <Utilities.h>
+#include "Warrior.h"
+#include <iostream>
 
 //TODO - SHELLY - consts
+Warrior::Warrior(int maxHealthPoints = 150) : Job(maxHealthPoints) {}
 
 int Warrior::calculateCombatPower(int force, int level) const {
      return force * 2 + level;
