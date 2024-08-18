@@ -101,3 +101,7 @@ bool Player::operator<(const Player& other) const {
 
     return name < other.name;
 }
+
+bool Player::isStillPlaying() const{
+    return this->getHealthPoints() > 0;
+}

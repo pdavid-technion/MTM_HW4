@@ -89,5 +89,7 @@ public:
 
     string reactToPotionsMerchant();
 
+    bool isStillPlaying() const;
+
     bool operator<(const Player& other) const;
 };

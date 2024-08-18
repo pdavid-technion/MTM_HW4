@@ -179,7 +179,10 @@ void MatamStory::playRound()
 
     /*=====  Play a turn for each player =====*/
     for (auto& player : playersList) {
-        playTurn(*player);
+        if(player->isStillPlaying()){
+            playTurn(*player);
+        }
+        
     }
     /*=============================================*/
 
