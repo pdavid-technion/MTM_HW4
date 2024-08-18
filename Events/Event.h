@@ -11,9 +11,9 @@ public:
      *
      * @return - the description of the event
     */
-    string getDescription() const;
+    virtual string getDescription() const;
 
-    virtual void handleEvent(Player& player) = 0;
+    virtual string handleEvent(Player& player) = 0;
 };
 
 class MonsterEvent: public Event {
@@ -22,17 +22,20 @@ class MonsterEvent: public Event {
 
     public:
         MonsterEvent(std::unique_ptr<Monster> monster):monster(std::move(monster)){}
-        void handleEvent(Player& player) override;  
+        string handleEvent(Player& player) override;
+        string getDescription() const override;  
 };
 
 class SolarEclipse: public Event {
         
     public:
-        void handleEvent(Player& player) override;  
+        string handleEvent(Player& player) override;
+        string getDescription() const override;   
 };
 
 class PotionsMerchant: public Event {
         
     public:
-        void handleEvent(Player& player) override;  
+        string handleEvent(Player& player) override;  
+        string getDescription() const override; 
 };

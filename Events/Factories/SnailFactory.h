@@ -1,11 +1,12 @@
 #pragma once
 
 #include "SingleMonsterFactory.h"
-#include "SingleMonster.h"
+#include "Snail.h"
 
 class SnailFactory : public SingleMonsterFactory {
 public:
+    SnailFactory() = default;
     std::shared_ptr<Monster> createMonster() const override {
-        return std::make_shared<SingleMonster>(5, 2, 10); // TODO - SHELLY - Add consts
+        return std::make_shared<Snail>(); // TODO - SHELLY - Add consts
     }
 };

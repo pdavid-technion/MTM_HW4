@@ -1,5 +1,6 @@
 #pragma once
  
+#include <string>
 #include <Monster.h>
 #include <memory>
 #include <vector>
@@ -45,6 +46,19 @@ class MonsterPack: public Monster{
 
         const std::vector<std::shared_ptr<Monster>>& getMonsters() const override {
             return monsters;
+        }
+
+        void reactToCombat() override{
+        for( const auto& monster: monsters ){
+                monster->reactToCombat();
+            }
+        
+        }
+
+        virtual string getDescription() const override{
+            return "Pack of " + std::to_string(monsters.size())+ " members (power " +
+            std::to_string(this->getCombatPower())+", loot " +
+            std::to_string(this->getLoot()),", damage " + std::to_string(this->getDamage())+")";
         }
 
     private:

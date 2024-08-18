@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <iostream>
@@ -17,7 +16,7 @@ class MatamStory{
 private:
     unsigned int m_turnIndex;
     std::vector<std::shared_ptr<Event>> eventsList;
-    std::vector<std::shared_ptr<Event>> playersList;
+    std::vector<std::shared_ptr<Player>> playersList;
     /**
      * Playes a single turn for a player
      *
@@ -43,8 +42,9 @@ private:
 
     string getNextWord(string str);
     std::shared_ptr<Monster> monsterFromString(string str);
-    std::unique_ptr<Job> jobFromString(string str);
-    std::unique_ptr<Character> characterFromString(string str);
+    std::unique_ptr<JobFactory> jobFactoryFromString(const std::string& jobType);
+    std::unique_ptr<CharacterFactory> characterFactoryFromString(const std::string& characterType);
+    std::shared_ptr<MonsterPack> parsePack(string& currLine);
 
 public:
     /**
