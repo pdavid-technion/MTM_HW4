@@ -3,6 +3,7 @@
 #include <MonsterPack.h>
 #include "Utilities.h"
 #include <memory>
+#include <algorithm>
 #include <../Events/Factories/MonsterFactory.h>
 #include <../Events/Factories/SingleMonsterFactory.h>
 #include <../Events/Factories/SnailFactory.h>
@@ -187,6 +188,11 @@ void MatamStory::playRound()
     printLeaderBoardMessage();
 
     /*===== Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
+    std::sort(playersList.begin(), playersList.end(), 
+    [](const std::shared_ptr<Player>& a, const std::shared_ptr<Player>& b) {
+        return *a < *b; // Use the overloaded operator< for comparison
+    });
+
     unsigned int index = 1;
     for (const auto& player : playersList) {
         printLeaderBoardEntry(index, *player);
@@ -220,9 +226,14 @@ bool MatamStory::isGameOver() const
 void MatamStory::play()
 {
     printStartMessage();
-    /*===== TODO: Print start message entry for each player using "printStartPlayerEntry" =====*/
-
+    /*===== Print start message entry for each player using "printStartPlayerEntry" =====*/
+    unsigned int index = 1;
+    for (const auto& player : playersList) {
+        printStartPlayerEntry(index, *player);
+        ++index;
+    }
     /*=========================================================================================*/
+   
     printBarrier();
 
     while (!isGameOver())
@@ -231,7 +242,24 @@ void MatamStory::play()
     }
 
     printGameOver();
-    /*===== TODO: Print either a "winner" message or "no winner" message =====*/
+    /*===== Print either a "winner" message or "no winner" message =====*/
+    std::sort(playersList.begin(), playersList.end(), 
+    [](const std::shared_ptr<Player>& a, const std::shared_ptr<Player>& b) {
+        return *a < *b;
+    });
 
+    bool anyPlayerWinner = false;
+    for (const auto& player : playersList) {
+        if (player->getLevel() >= 10) {
+            printWinner(*player);
+            anyPlayerWinner = true;
+            break; // Only one winner is needed, so break after finding the first
+        }
+    }
+
+    if (!anyPlayerWinner) {
+        printNoWinners();
+    }
     /*========================================================================*/
+    
 }

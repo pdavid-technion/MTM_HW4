@@ -89,3 +89,15 @@ string Player::reactToSolarEclipse(){
 string Player::reactToPotionsMerchant(){
     this->character->reactToPotionsMerchant(*this);
 }
+
+bool Player::operator<(const Player& other) const {
+    if (level != other.level) {
+        return level > other.level;
+    }
+
+    if (getCoins() != other.getCoins()) {
+        return getCoins() > other.getCoins();
+    }
+
+    return name < other.name;
+}

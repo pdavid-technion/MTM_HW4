@@ -88,4 +88,6 @@ public:
     string reactToSolarEclipse();
 
     string reactToPotionsMerchant();
+
+    bool operator<(const Player& other) const;
 };
