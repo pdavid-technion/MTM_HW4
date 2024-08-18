@@ -1,12 +1,13 @@
 #pragma once
 
-#include <EventFactory.h>
-#include <Event.h>
+#include "EventFactory.h"
+#include "../SolarEclipse.h"
+#include "../Event.h"
 #include <memory>
 
 class SolarEclipseFactory: public EventFactory{
     public:
-        std::shared_ptr<Event> createEvent() const override{
-            return std::make_shared<SolarEclipse>();
+        std::unique_ptr<Event> createEvent() const override{
+            return std::make_unique<SolarEclipse>();
         }
 };

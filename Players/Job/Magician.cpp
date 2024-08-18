@@ -1,7 +1,8 @@
-#include <Job.h>
-#include <Player.h>
-#include <../Events/Monster.h>
-#include <Utilities.h>
+#include "Job.h"
+#include "../Player.h"
+#include "../../Events/Monster.h"
+#include "../../Utilities.h"
+#include "Magician.h"
 
 //TODO - SHELLY - consts
 Magician::Magician():Job(){}
@@ -13,4 +14,18 @@ string Magician::reactToSolarEclipse( Player& player ) const {
 
 string Magician::printJobName() const{
      return "Magician";
+}
+
+int Magician::calculateCombatPower(int force, int level) const{
+      return force + level;
+}
+std::string Magician::combatMonster(Player& player, Monster& monster) const{
+     if(player.getCombatPower() > monster.getCombatPower()){
+          player.winMonster(monster.getLoot());
+          return getEncounterWonMessage(player,monster.getLoot());
+     }
+     else {
+          player.loseToMonster(monster.getDamage());
+          return getEncounterLostMessage(player, monster.getDamage());
+     } 
 }

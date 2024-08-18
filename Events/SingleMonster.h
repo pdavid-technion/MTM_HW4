@@ -1,9 +1,10 @@
 #pragma once
-#include <Monster.h>
+#include "Monster.h"
 
 class SingleMonster: public Monster {
     public:
         
+        ~SingleMonster() = default;
         SingleMonster(int combatPower, int loot, int damage):
             combatPower(combatPower),loot(loot), damage(damage){}
 

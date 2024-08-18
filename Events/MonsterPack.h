@@ -1,14 +1,15 @@
 #pragma once
  
 #include <string>
-#include <Monster.h>
+#include "Monster.h"
 #include <memory>
 #include <vector>
 
 class MonsterPack: public Monster{
     public:
-        void addMonster(std::shared_ptr<Monster> monster ) override{
-            monsters.push_back(monster);
+        ~MonsterPack() = default;
+        void addMonster(std::unique_ptr<Monster> monster ) override{
+            monsters.push_back(std::move(monster));
         }
 
         int getCombatPower() const override {
@@ -44,7 +45,7 @@ class MonsterPack: public Monster{
             return true;
         }
 
-        const std::vector<std::shared_ptr<Monster>>& getMonsters() const override {
+        const std::vector<std::unique_ptr<Monster>>& getMonsters() const override {
             return monsters;
         }
 
@@ -62,5 +63,5 @@ class MonsterPack: public Monster{
         }
 
     private:
-        std::vector<std::shared_ptr<Monster>> monsters;
+        std::vector<std::unique_ptr<Monster>> monsters;
 };

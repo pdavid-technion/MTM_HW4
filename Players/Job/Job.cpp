@@ -16,7 +16,7 @@ string Job::reactToSolarEclipse( Player& player) const {
 
 
 string Job::combatMonster(Player& player, Monster& monster) const{
-       if(player.getCombatPower() > monster.getCombatPower()){
+     if(player.getCombatPower() > monster.getCombatPower()){
             player.winMonster(monster.getLoot());
             return getEncounterWonMessage(player,monster.getLoot());
      }

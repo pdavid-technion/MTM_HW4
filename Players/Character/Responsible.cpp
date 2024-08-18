@@ -1,6 +1,6 @@
-#include <Character.h>
-#include <Player.h>
-#include <Utilities.h>
+#include "Character.h"
+#include "../Player.h"
+#include "../../Utilities.h"
 //TODO - SHELLY - consts
 string Responsible::reactToPotionsMerchant( Player& player) const{
     int maxPotionsAffordable = player.getCoins() / 5;

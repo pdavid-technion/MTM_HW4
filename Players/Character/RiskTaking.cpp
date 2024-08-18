@@ -1,6 +1,6 @@
-#include <Character.h>
-#include <Player.h>
-#include <Utilities.h>
+#include "Character.h"
+#include "../Player.h"
+#include "../../Utilities.h"
 //TODO - SHELLY - consts
 
 string RiskTaking::reactToPotionsMerchant( Player& player) const{
