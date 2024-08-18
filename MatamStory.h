@@ -16,7 +16,7 @@ class MatamStory{
 private:
     unsigned int m_turnIndex;
     std::vector<std::shared_ptr<Event>> eventsList;
-    std::vector<std::shared_ptr<Event>> playersList;
+    std::vector<std::shared_ptr<Player>> playersList;
     /**
      * Playes a single turn for a player
      *

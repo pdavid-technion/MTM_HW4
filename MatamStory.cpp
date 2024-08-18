@@ -176,16 +176,22 @@ void MatamStory::playRound()
 
     printRoundStart();
 
-    /*===== TODO: Play a turn for each player =====*/
-
+    /*=====  Play a turn for each player =====*/
+    for (auto& player : playersList) {
+        playTurn(*player);
+    }
     /*=============================================*/
 
     printRoundEnd();
 
     printLeaderBoardMessage();
 
-    /*===== TODO: Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
-
+    /*===== Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
+    unsigned int index = 1;
+    for (const auto& player : playersList) {
+        printLeaderBoardEntry(index, *player);
+        ++index;
+    }
     /*=======================================================================================*/
 
     printBarrier();
