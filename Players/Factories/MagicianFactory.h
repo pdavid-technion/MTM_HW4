@@ -4,7 +4,7 @@
 #include <memory>
 
 
-class MagicianFactory : JobFactory {
+class MagicianFactory : public JobFactory {
     public:
         std::unique_ptr<Job> createJob() const override {
             return std::make_unique<Magician>();

@@ -4,7 +4,7 @@
 #include <memory>
 
 
-class ResponsibleFactory : CharacterFactory {
+class ResponsibleFactory : public CharacterFactory {
     public:
         std::unique_ptr<Character> createCharacter() const override {
             return std::make_unique<Responsible>();

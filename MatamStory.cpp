@@ -1,6 +1,7 @@
 
 #include "MatamStory.h"
 #include "Utilities.h"
+#include <memory>
 #include <../Events/Factories/MonsterFactory.h>
 #include <../Events/Factories/SingleMonsterFactory.h>
 #include <../Events/Factories/SnailFactory.h>
@@ -9,14 +10,14 @@
 #include <../Events/Factories/MonsterEventFactory.h>
 #include <../Events/Factories/PotionsMerchantFactory.h>
 #include <../Events/Factories/SolarEclipseFactory.h>
-#include<../Players/Factories/WarriorFactory.h>
-#include<../Players/Factories/MagicianFactory.h>
-#include<../Players/Factories/ArcherFactory.h>
-#include<../Players/Factories/ResponsibleFactory.h>
-#include<../Players/Factories/RiskTakingFactory.h>
+#include <../Players/Factories/WarriorFactory.h>
+#include <../Players/Factories/MagicianFactory.h>
+#include <../Players/Factories/ArcherFactory.h>
+#include <../Players/Factories/ResponsibleFactory.h>
+#include <../Players/Factories/RiskTakingFactory.h>
 
-
-string getNextWord(string line) {
+string getNextWord(string line)
+{
     string word = line.substr(0, line.find(" "));
     line.erase(0, line.find(" ") + 1);
     return word;
@@ -25,84 +26,123 @@ string getNextWord(string line) {
 std::shared_ptr<Monster> monsterFromString(string str)
 {
     std::shared_ptr<Monster> monster = nullptr;
-    if(str == "Snail") {
+    if (str == "Snail")
+    {
         SnailFactory snailFactory;
         monster = snailFactory.createMonster();
     }
-    else if(str == "Balrog") {
+    else if (str == "Balrog")
+    {
         BalrogFactory balrogFactory;
         monster = balrogFactory.createMonster();
     }
-    else if(str == "Slime") {
+    else if (str == "Slime")
+    {
         SlimeFactory slimeFactory;
         monster = slimeFactory.createMonster();
     }
     return monster;
 }
 
-std::unique_ptr<Job> jobFromString(string str){
+std::unique_ptr<Job> jobFromString(string str)
+{
     std::unique_ptr<Job> job = nullptr;
-    if(str == "Warrior") {
+    if (str == "Warrior")
+    {
         WarriorFactory warriorFactory;
         job = warriorFactory.createJob();
     }
-    else if(str == "Magician") {
-         MagicianFactory magicianFactory;
+    else if (str == "Magician")
+    {
+        MagicianFactory magicianFactory;
         job = magicianFactory.createJob();
     }
-    else if(str == "Archer") {
+    else if (str == "Archer")
+    {
         ArcherFactory archerFactory;
         job = archerFactory.createJob();
     }
     return job;
 }
 
-std::unique_ptr<Character> characterFromString(string str){
+std::unique_ptr<Character> characterFromString(string str)
+{
     std::unique_ptr<Character> character = nullptr;
-    if(str == "Responsible") {
+    if (str == "Responsible")
+    {
         ResponsibleFactory responsibleFactory;
         character = responsibleFactory.createCharacter();
     }
-    else if(str == "RiskTaking") {
+    else if (str == "RiskTaking")
+    {
         RiskTakingFactory riskTakingFactory;
         character = riskTakingFactory.createCharacter();
     }
     return character;
 }
 
-MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) {
+std::unique_ptr<JobFactory> jobFactoryFromString(const std::string& jobType) {
+    if (jobType == "Warrior") {
+        return std::make_unique<WarriorFactory>();
+    } else if (jobType == "Archer") {
+        return std::make_unique<ArcherFactory>();
+    } else if (jobType == "Magician") {
+        return std::make_unique<MagicianFactory>();
+    } else {
+        throw std::invalid_argument("Invalid job type");
+    }
+}
+
+std::unique_ptr<CharacterFactory> characterFactoryFromString(const std::string &characterType){
+     if (characterType == "Responsible") {
+        return std::make_unique<ResponsibleFactory>();
+    } else if (characterType == "RiskTaker") {
+        return std::make_unique<RiskTakingFactory>();
+    } else {
+        throw std::invalid_argument("Invalid character type");
+    }
+}
+
+MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
+{
 
     string line;
     /*===== TODO: Open and read events file =====*/
-    
-    while (getline(eventsStream, line)) {
+
+    while (getline(eventsStream, line))
+    {
         std::shared_ptr<Event> event;
         string firstWord = getNextWord(line);
-        
-        if(firstWord == "Pack") {
+
+        if (firstWord == "Pack")
+        {
 
             std::shared_ptr<Monster> pack, monster;
             int packSize = stoi(getNextWord(line));
 
-            for(int i=0; i < packSize; i++) {
-                if(monster = monsterFromString(getNextWord(line))) {                    
+            for (int i = 0; i < packSize; i++)
+            {
+                if (monster = monsterFromString(getNextWord(line)))
+                {
                     pack->addMonster(monster);
                 }
             }
 
             MonsterEventFactory monsterEventFactory = MonsterEventFactory(pack);
             event = monsterEventFactory.createEvent();
-
         }
-        else if(firstWord == "SolarEclipse") {
+        else if (firstWord == "SolarEclipse")
+        {
             SolarEclipseFactory solarElipseFactory;
             event = solarElipseFactory.createEvent();
         }
-        else if(firstWord == "PotionsMerchant") {
+        else if (firstWord == "PotionsMerchant")
+        {
             PotionsMerchantFactory potionsMerchantFactory;
             event = potionsMerchantFactory.createEvent();
         }
-        else {
+        else
+        {
             std::shared_ptr<Monster> monster = monsterFromString(firstWord);
             MonsterEventFactory monsterEventFactory(monster);
             event = monsterEventFactory.createEvent();
@@ -112,26 +152,26 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
     }
     /*==========================================*/
 
-
     /*===== TODO: Open and Read players file =====*/
 
-
-    while (getline(playersStream, line)) {
+    while (getline(playersStream, line))
+    {
         string name = getNextWord(line);
-        std::unique_ptr<Job> job = jobFromString(getNextWord(line));
-        std::unique_ptr<Character> character = characterFromString(getNextWord(line));
-        std::shared_ptr<Player> player = Player(name, job, character);
+
+        std::unique_ptr<JobFactory> jobFactory = jobFactoryFromString(getNextWord(line)); // Modify jobFromString to return JobFactory
+        std::unique_ptr<CharacterFactory> characterFactory = characterFactoryFromString(getNextWord(line)); // Modify characterFromString similarly
+        std::shared_ptr<Player> player = std::make_shared<Player>(
+            name, 1, 10, 100, 10, std::move(jobFactory), std::move(characterFactory));
         playersList.push_back(player);
     }
-    
 
     /*============================================*/
-
 
     this->m_turnIndex = 1;
 }
 
-void MatamStory::playTurn(Player& player) {
+void MatamStory::playTurn(Player &player)
+{
 
     /**
      * Steps to implement (there may be more, depending on your design):
@@ -139,12 +179,13 @@ void MatamStory::playTurn(Player& player) {
      * 2. Print the turn details with "printTurnDetails"
      * 3. Play the event
      * 4. Print the turn outcome with "printTurnOutcome"
-    */
+     */
 
     m_turnIndex++;
 }
 
-void MatamStory::playRound() {
+void MatamStory::playRound()
+{
 
     printRoundStart();
 
@@ -163,20 +204,23 @@ void MatamStory::playRound() {
     printBarrier();
 }
 
-bool MatamStory::isGameOver() const {
+bool MatamStory::isGameOver() const
+{
     /*===== TODO: Implement the game over condition =====*/
     return false; // Replace this line
     /*===================================================*/
 }
 
-void MatamStory::play() {
+void MatamStory::play()
+{
     printStartMessage();
     /*===== TODO: Print start message entry for each player using "printStartPlayerEntry" =====*/
 
     /*=========================================================================================*/
     printBarrier();
 
-    while (!isGameOver()) {
+    while (!isGameOver())
+    {
         playRound();
     }
 
@@ -185,5 +229,3 @@ void MatamStory::play() {
 
     /*========================================================================*/
 }
-
-

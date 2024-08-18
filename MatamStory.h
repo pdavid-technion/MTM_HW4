@@ -45,6 +45,8 @@ private:
     std::shared_ptr<Monster> monsterFromString(string str);
     std::unique_ptr<Job> jobFromString(string str);
     std::unique_ptr<Character> characterFromString(string str);
+    std::unique_ptr<JobFactory> jobFactoryFromString(const std::string& jobType);
+    std::unique_ptr<CharacterFactory> characterFactoryFromString(const std::string& characterType);
 
 public:
     /**

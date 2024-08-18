@@ -2,6 +2,7 @@
 #include <JobFactory.h>
 #include <Job.h>
 #include <Character.h>
+#include <string>
 
 
 Player::Player( std::string name,
@@ -18,7 +19,8 @@ Player::Player( std::string name,
                 character(characterFactory->createCharacter()) {}
 
 string Player::getDescription() const{
-    string str = name + ", " + job->printJobName() + " with " + character->printCharacterName() + " (" + level + ", " + force + ")";
+    string str = name + ", " + job->printJobName() + " with " + character->printCharacterName() +
+    " (" + std::to_string(level) + ", " + std::to_string(force) + ")";
     return str;
 } 
 
