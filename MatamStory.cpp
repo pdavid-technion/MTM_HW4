@@ -112,8 +112,8 @@ MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
     {
         string name = getNextWord(line);
 
-        std::unique_ptr<JobFactory> jobFactory = jobFactoryFromString(getNextWord(line)); // Modify jobFromString to return JobFactory
-        std::unique_ptr<CharacterFactory> characterFactory = characterFactoryFromString(getNextWord(line)); // Modify characterFromString similarly
+        std::unique_ptr<JobFactory> jobFactory = jobFactoryFromString(getNextWord(line));
+        std::unique_ptr<CharacterFactory> characterFactory = characterFactoryFromString(getNextWord(line));
         std::shared_ptr<Player> player = std::make_shared<Player>(
             name, 1, 10, 100, 10, std::move(jobFactory), std::move(characterFactory));
         playersList.push_back(player);
@@ -152,6 +152,21 @@ void MatamStory::playTurn(Player &player)
      * 3. Play the event
      * 4. Print the turn outcome with "printTurnOutcome"
      */
+    if (eventsList.empty()) {
+        return; // No events to process
+    }
+
+    // Get the current event in a circular manner
+    auto& event = eventsList[m_turnIndex % eventsList.size()];
+    
+    // Print the turn details
+    printTurnDetails(m_turnIndex, player, *event);
+
+    // Apply the event to the player
+    std::string outcome = event->handleEvent(player);
+    
+    // Print the outcome of the turn
+    printTurnOutcome(outcome);
 
     m_turnIndex++;
 }

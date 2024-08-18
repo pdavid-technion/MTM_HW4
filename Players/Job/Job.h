@@ -8,8 +8,8 @@ public:
     Job(int maxHealthPoints = 100, int coins = 10 ); //TODO - SHELLY - consts
     virtual ~Job() = default;
     virtual int calculateCombatPower(int force, int level) const {};
-    virtual void combatMonster(Player& player, Monster& monster) const = 0;
-    virtual void reactToSolarEclipse( Player& player) const {};
+    virtual string combatMonster(Player& player, Monster& monster) const = 0;
+    virtual string reactToSolarEclipse( Player& player) const {};
     int getMaxHealthPoints();
     int getCoins();
     void setCoins(int newCoins);
@@ -24,7 +24,7 @@ class Warrior : public Job {
     public:
         Warrior(int maxHealthPoints = 150);
         int calculateCombatPower(int force, int level) const override;
-        void combatMonster(Player& player, Monster& monster) const override;
+        string combatMonster(Player& player, Monster& monster) const override;
         string printJobName() const override;
 };
 
@@ -34,6 +34,6 @@ class Archer : public Job {
 };
 
 class Magician : public Job {
-    void reactToSolarEclipse( Player& player) const override;
+    string reactToSolarEclipse( Player& player) const override;
     string printJobName() const override;
 };

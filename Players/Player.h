@@ -83,9 +83,9 @@ public:
 
     void buyPotions(int potionAmount);
 
-    void combatMonster( Monster& monster);
+    string combatMonster( Monster& monster);
 
-    void reactToSolarEclipse();
+    string reactToSolarEclipse();
 
-    void reactToPotionsMerchant();
+    string reactToPotionsMerchant();
 };

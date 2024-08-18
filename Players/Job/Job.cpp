@@ -1,6 +1,7 @@
 #include <Job.h>
 #include <Player.h>
 #include <../Events/Monster.h>
+#include <Utilities.h>
 
 Job::Job(int maxHealthPoints, int coins) :maxHealthPoints(maxHealthPoints), coins(coins){}
 
@@ -8,17 +9,20 @@ int Job::calculateCombatPower(int force, int level) const {
         return force + level;
 }
 
-void Job::reactToSolarEclipse( Player& player) const {
+string Job::reactToSolarEclipse( Player& player) const {
         player.applyDarknessConfusion();
-    }
+        return getSolarEclipseMessage(player,-1);
+}
 
 
-void Job::combatMonster(Player& player, Monster& monster) const{
+string Job::combatMonster(Player& player, Monster& monster) const{
        if(player.getCombatPower() > monster.getCombatPower()){
             player.winMonster(monster.getLoot());
+            return getEncounterWonMessage(player,monster.getLoot());
      }
      else {
           player.loseToMonster(monster.getDamage());
+          return getEncounterLostMessage(player, monster.getDamage());
      } 
 }
 

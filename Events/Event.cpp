@@ -5,16 +5,17 @@
     return "DAVID implement pls";
  }
 
- void MonsterEvent::handleEvent(Player& player){
-    player.combatMonster(*this->monster);
+ string MonsterEvent::handleEvent(Player& player){
+    string outcome = player.combatMonster(*this->monster);
     this->monster->reactToCombat();
+    return outcome;
 
  }
 
- void SolarEclipse::handleEvent(Player& player){
-    player.reactToSolarEclipse();
+ string SolarEclipse::handleEvent(Player& player){
+    return player.reactToSolarEclipse();
  }
 
- void PotionsMerchant::handleEvent(Player& player){
-    player.reactToPotionsMerchant();
+ string PotionsMerchant::handleEvent(Player& player){
+   return player.reactToPotionsMerchant();
  }

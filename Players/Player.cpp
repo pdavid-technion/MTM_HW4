@@ -78,14 +78,14 @@ void Player::buyPotions(int potionAmount){
     this->job->setCoins(this->getCoins() - potionAmount * 5);
 }
 
-void Player::combatMonster( Monster& monster){
-    this->job->combatMonster(*this, monster);
+string Player::combatMonster( Monster& monster){
+    return this->job->combatMonster(*this, monster);
 }
 
-void Player::reactToSolarEclipse(){
-    this->job->reactToSolarEclipse(*this);
+string Player::reactToSolarEclipse(){
+    return this->job->reactToSolarEclipse(*this);
 }
 
-void Player::reactToPotionsMerchant(){
+string Player::reactToPotionsMerchant(){
     this->character->reactToPotionsMerchant(*this);
 }
