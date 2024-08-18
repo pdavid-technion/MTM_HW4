@@ -11,6 +11,7 @@ class Monster{
         virtual int getLoot() const = 0;
         virtual int getDamage() const = 0;
         virtual bool isPack() const = 0;
+        virtual void reactToCombat() = 0;
 
         virtual void addMonster(std::shared_ptr<Monster>) {
             throw std::runtime_error("Operation not supported");

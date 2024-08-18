@@ -23,6 +23,10 @@ class SingleMonster: public Monster {
             return false;
         }
 
+        void updateCombatPower(int extraPower){
+            this->combatPower += extraPower;
+        }
+
         private:
             int combatPower;
             int loot;

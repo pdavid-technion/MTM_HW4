@@ -6,6 +6,9 @@
 #include <../Events/Factories/SnailFactory.h>
 #include <../Events/Factories/SlimeFactory.h>
 #include <../Events/Factories/BalrogFactory.h>
+#include <../Events/Factories/MonsterEventFactory.h>
+#include <../Events/Factories/PotionsMerchantFactory.h>
+#include <../Events/Factories/SolarEclipseFactory.h>
 #include<../Players/Factories/WarriorFactory.h>
 #include<../Players/Factories/MagicianFactory.h>
 #include<../Players/Factories/ArcherFactory.h>
@@ -75,25 +78,34 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
     while (getline(eventsStream, line)) {
         std::shared_ptr<Event> event;
         string firstWord = getNextWord(line);
+        
         if(firstWord == "Pack") {
+
             std::shared_ptr<Monster> pack, monster;
             int packSize = stoi(getNextWord(line));
+
             for(int i=0; i < packSize; i++) {
                 if(monster = monsterFromString(getNextWord(line))) {                    
                     pack->addMonster(monster);
                 }
             }
-            event = Event::MonsterEvent(pack);
+
+            MonsterEventFactory monsterEventFactory = MonsterEventFactory(pack);
+            event = monsterEventFactory.createEvent();
+
         }
         else if(firstWord == "SolarEclipse") {
-           event = Event::SolarEclipse();
+            SolarEclipseFactory solarElipseFactory;
+            event = solarElipseFactory.createEvent();
         }
         else if(firstWord == "PotionsMerchant") {
-            event = Event::PotionsMerchant();
+            PotionsMerchantFactory potionsMerchantFactory;
+            event = potionsMerchantFactory.createEvent();
         }
         else {
             std::shared_ptr<Monster> monster = monsterFromString(firstWord);
-            event = Event::MonsterEvent(monster);
+            MonsterEventFactory monsterEventFactory(monster);
+            event = monsterEventFactory.createEvent();
         }
 
         eventsList.push_back(event);

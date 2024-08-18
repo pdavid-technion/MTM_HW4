@@ -7,6 +7,7 @@
 
  void MonsterEvent::handleEvent(Player& player){
     player.combatMonster(*this->monster);
+    this->monster->reactToCombat();
 
  }
 

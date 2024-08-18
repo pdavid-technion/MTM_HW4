@@ -47,6 +47,13 @@ class MonsterPack: public Monster{
             return monsters;
         }
 
+        virtual void reactToCombat() override{
+        for( const auto& monster: monsters ){
+                monster->reactToCombat();
+            }
+        
+        }
+
     private:
         std::vector<std::shared_ptr<Monster>> monsters;
 };
