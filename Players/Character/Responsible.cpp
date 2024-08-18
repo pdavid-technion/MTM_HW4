@@ -8,8 +8,7 @@ void Responsible::reactToPotionsMerchant( Player& player) const{
     
     player.buyPotions(potionsToBuy);
 }
-void RiskTaking::reactToPotionsMerchant( Player& player) const{
-    if(player.getHealthPoints() < 50 ){
-        player.buyPotions(1);
-    }
+
+string Responsible::printCharacterName() const{
+    return "Responsible";
 }

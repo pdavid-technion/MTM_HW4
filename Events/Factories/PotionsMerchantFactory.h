@@ -10,4 +10,3 @@ class PotionsMerchantFactory: public EventFactory{
             return std::make_shared<PotionsMerchant>();
         }
 };
-

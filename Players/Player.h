@@ -4,6 +4,7 @@
 #include <string>
 #include <JobFactory.h>
 #include <CharacterFactory.h>
+#include <../Events/Monster.h>
 
 using std::string;
 

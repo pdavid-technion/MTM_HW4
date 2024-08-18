@@ -2,6 +2,8 @@
 #include <Player.h>
 #include <../Events/Monster.h>
 
+//TODO - SHELLY - consts
+
 int Warrior::calculateCombatPower(int force, int level) const {
      return force * 2 + level;
 }
@@ -15,4 +17,8 @@ void Warrior::combatMonster(Player& player, Monster& monster) const{
           player.loseToMonster(monster.getDamage());
      }
 
+}
+
+string Warrior::printJobName() const{
+     return "Warrior";
 }

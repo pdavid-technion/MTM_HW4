@@ -13,6 +13,7 @@ public:
     int getMaxHealthPoints();
     int getCoins();
     void setCoins(int newCoins);
+    virtual string printJobName() const = 0;
 
     private:
         int maxHealthPoints;
@@ -24,12 +25,15 @@ class Warrior : public Job {
         Warrior(int maxHealthPoints = 150);
         int calculateCombatPower(int force, int level) const override;
         void combatMonster(Player& player, Monster& monster) const override;
+        string printJobName() const override;
 };
 
 class Archer : public Job {
     Archer(int coins = 20);
+    string printJobName() const override;
 };
 
 class Magician : public Job {
     void reactToSolarEclipse( Player& player) const override;
+    string printJobName() const override;
 };
