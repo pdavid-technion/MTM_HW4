@@ -5,6 +5,8 @@
 #include <vector>
 #include "Event.h"
 
+// class Event;
+
 class MonsterEvent: public Event {
     private:
          std::unique_ptr<Monster> monster;  

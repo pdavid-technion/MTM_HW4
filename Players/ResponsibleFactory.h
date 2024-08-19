@@ -1,5 +1,5 @@
 #pragma once
-#include "../Character/Character.h"
+#include "Responsible.h"
 #include "CharacterFactory.h"
 #include <memory>
 

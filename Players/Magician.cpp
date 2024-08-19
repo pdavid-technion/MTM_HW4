@@ -1,10 +1,9 @@
 #include "Job.h"
-#include "../Player.h"
-#include "../../Events/Monster.h"
-#include "../../Utilities.h"
+#include "Player.h"
+#include "../Events/Monster.h"
+#include "../Utilities.h"
 #include "Magician.h"
 
-//TODO - SHELLY - consts
 Magician::Magician():Job(){}
 
 string Magician::reactToSolarEclipse( Player& player ) const {
@@ -28,4 +27,8 @@ std::string Magician::combatMonster(Player& player, Monster& monster) const{
           player.loseToMonster(monster.getDamage());
           return getEncounterLostMessage(player, monster.getDamage());
      } 
+}
+
+std::unique_ptr<Job> Magician::clone() const {
+        return std::make_unique<Magician>(*this);
 }

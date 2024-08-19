@@ -1,14 +1,17 @@
 #pragma once
 #include "SingleMonster.h"
+#include "GameConsts.h"
 
 class Balrog: public SingleMonster {
     public:
-    Balrog(int combatPower = 15, int loot = 100, int damage = 9001): 
+    Balrog( int combatPower = BALROG_COMBAT_POWER, 
+            int loot = BALROG_LOOT,
+            int damage = BALROG_DAMAGE): 
     SingleMonster(combatPower,loot,damage){}
      ~Balrog() = default;
 
     virtual void reactToCombat() override{
-        this->updateCombatPower(2);
+        this->updateCombatPower(BALROG_COMBAT_REACTION);
     }
 
     string getDescription() const override{

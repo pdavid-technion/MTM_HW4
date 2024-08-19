@@ -1,8 +1,8 @@
 #pragma once
-#include "../Job/Job.h"
+#include "Job.h"
 #include "JobFactory.h"
 #include <memory>
-#include "../Job/Magician.h"
+#include "Magician.h"
 
 
 class MagicianFactory : public JobFactory {

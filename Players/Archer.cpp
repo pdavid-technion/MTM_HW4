@@ -1,11 +1,10 @@
 #include "Job.h"
-#include "../Player.h"
-#include "../../Events/Monster.h"
+#include "Player.h"
+#include "../Events/Monster.h"
 #include "Archer.h"
+#include "GameConsts.h"
 
-//TODO - SHELLY - consts
-
-Archer::Archer(int coins) : Job(100, coins) {}
+Archer::Archer(int coins) : Job(DEFAULT_HEALTH_POINTS, coins) {}
 
 string Archer::printJobName() const{
     return "Archer";
@@ -29,4 +28,8 @@ std::string Archer::combatMonster(Player& player, Monster& monster) const {
           player.loseToMonster(monster.getDamage());
           return getEncounterLostMessage(player, monster.getDamage());
      } 
+}
+
+std::unique_ptr<Job> Archer::clone() const {
+        return std::make_unique<Archer>(*this);
 }

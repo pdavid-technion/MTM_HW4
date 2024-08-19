@@ -1,9 +1,12 @@
 #pragma once
 #include "SingleMonster.h"
+#include "GameConsts.h"
 
 class Snail: public SingleMonster {
     public:
-    Snail(int combatPower = 5, int loot = 2, int damage = 10): SingleMonster(combatPower,loot,damage){}
+    Snail(  int combatPower = SNAIL_COMBAT_POWER,
+            int loot = SNAIL_LOOT,
+            int damage = SNAIL_DAMAGE): SingleMonster(combatPower,loot,damage){}
     ~Snail() = default;
 
     string getDescription() const override{

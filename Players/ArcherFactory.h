@@ -1,7 +1,7 @@
 #pragma once
-#include "../Job/Job.h"
+#include "Job.h"
 #include "JobFactory.h"
-#include "../Job/Archer.h"
+#include "Archer.h"
 #include <memory>
 
 

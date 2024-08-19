@@ -1,11 +1,14 @@
 #pragma once
 #include "SingleMonster.h"
 #include <string>
+#include "GameConsts.h"
 
 class Slime: public SingleMonster {
     
     public:
-    Slime(int combatPower = 12, int loot = 5, int damage = 25): SingleMonster(combatPower,loot,damage){}
+    Slime(  int combatPower = SLIME_COMBAT_POWER,
+            int loot = SLIME_LOOT,
+            int damage = SLIME_DAMAGE): SingleMonster(combatPower,loot,damage){}
     ~Slime() = default;
     string getDescription() const override{
         return "Slime (power "+std::to_string(this->getCombatPower())+", loot " +

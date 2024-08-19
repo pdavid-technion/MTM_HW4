@@ -11,7 +11,7 @@ public:
      *
      * @return - the description of the event
     */
-    virtual string getDescription() const;
+    virtual string getDescription() const = 0;
 
     virtual string handleEvent(Player& player) = 0;
 

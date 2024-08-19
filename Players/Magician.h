@@ -1,15 +1,16 @@
 #pragma once
 #include "Job.h"
-#include "../Player.h"
-#include "../../Events/Monster.h"
-#include "../../Utilities.h"
+#include "Player.h"
+#include "../Events/Monster.h"
+#include "../Utilities.h"
 
-class Archer : public Job {
+class Magician : public Job {
 public:
-    Archer(int coins = 20);
-    ~Archer() = default;
+    Magician();
+    ~Magician() = default;
     string printJobName() const override;
     string reactToSolarEclipse( Player& player) const override;
     int calculateCombatPower(int force, int level) const override;
     std::string combatMonster(Player& player, Monster& monster) const override;
+    std::unique_ptr<Job> clone() const override;
 };

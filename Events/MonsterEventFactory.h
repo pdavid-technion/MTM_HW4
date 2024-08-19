@@ -1,8 +1,8 @@
 #pragma once
 
 #include "EventFactory.h"
-#include "../Monster.h"
-#include "../MonsterEvent.h"
+#include "Monster.h"
+#include "MonsterEvent.h"
 #include <memory>
 
 class MonsterEventFactory: public EventFactory{

@@ -1,6 +1,6 @@
 #pragma once
-#include "../Character/Character.h"
 #include "CharacterFactory.h"
+#include "RiskTaking.h"
 #include <memory>
 
 
