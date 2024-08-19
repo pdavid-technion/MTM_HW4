@@ -9,5 +9,5 @@ class MonsterFactory {
     public:
         MonsterFactory() = default;
         virtual ~MonsterFactory() = default;
-        virtual std::shared_ptr<Monster> createMonster() const = 0;
+        virtual std::unique_ptr<Monster> createMonster() const = 0;
 };

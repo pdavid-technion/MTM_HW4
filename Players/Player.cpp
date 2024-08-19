@@ -1,107 +1,139 @@
-#include <Player.h>
-#include <JobFactory.h>
-#include <Job.h>
-#include <Character.h>
+#include "Player.h"
+#include "JobFactory.h"
+#include "Job.h"
+#include "Character.h"
 #include <string>
+#include <GameConsts.h>
+
+Player::Player(std::string name,
+                int level,
+                int force,
+                int healthPoints,
+                std::shared_ptr<JobFactory> jobFactory,
+                std::shared_ptr<CharacterFactory> characterFactory)
+                : name(name),
+                  level(level),
+                  force(force),
+                  healthPoints(healthPoints),
+                  job(jobFactory ? jobFactory->createJob() : nullptr),
+                  character(characterFactory ? characterFactory->createCharacter() : nullptr) {}
+
+Player::Player(const Player& other)
+    : name(other.name),
+      level(other.level),
+      force(other.force),
+      healthPoints(other.healthPoints),
+      job(other.job ? other.job->clone() : nullptr),        
+      character(other.character ? other.character->clone() : nullptr)  {}
+
+Player::Player(Player&& other) noexcept
+    : name(std::move(other.name)),
+      level(other.level),
+      force(other.force),
+      healthPoints(other.healthPoints),
+      job(other.job ? other.job->clone() : nullptr),
+      character(other.character ? other.character->clone() : nullptr) {}
+
+Player& Player::operator=(Player&& other) noexcept {
+    if (this != &other) {
 
 
-Player::Player( std::string name,
-                int level = 1,
-                int force = 10,
-                int healthPoints = 100,
-                std::unique_ptr<JobFactory> jobFactory,
-                std::unique_ptr<CharacterFactory> characterFactory):
-                name(name),
-                level(level),
-                force(force),
-                healthPoints(healthPoints),
-                job(jobFactory->createJob()),
-                character(characterFactory->createCharacter()) {}
+        // Transfer the non-pointer data members
+        name = std::move(other.name);
+        level = other.level;
+        force = other.force;
+        healthPoints = other.healthPoints;
 
-string Player::getDescription() const{
+        // Deep copy the job and character from the other player
+        job = other.job ? other.job->clone() : nullptr;
+        character = other.character ? other.character->clone() : nullptr;
+    }
+    return *this;
+}
+
+string Player::getDescription() const {
     string str = name + ", " + job->printJobName() + " with " + character->printCharacterName() +
     " (" + std::to_string(level) + ", " + std::to_string(force) + ")";
     return str;
-} 
-
-string Player::getName() const{
-        return name;
 }
 
-int Player::getLevel() const{
-    return this->level;
+string Player::getName() const {
+    return name;
 }
 
-int Player::getForce() const{
-    return this->force;
+int Player::getLevel() const {
+    return level;
 }
 
-int Player::getHealthPoints() const{
-   return this->healthPoints;
+int Player::getForce() const {
+    return force;
 }
 
-int Player::getCoins() const{
+int Player::getHealthPoints() const {
+    return healthPoints;
+}
+
+int Player::getCoins() const {
     return this->job->getCoins();
 }
 
-int Player::getCombatPower() const{
+int Player::getCombatPower() const {
     return this->job->calculateCombatPower(this->force, this->level);
 }
 
-void Player::winMonster( int loot ) {
-        this->level += 1;
-        this->job->setCoins(this->getCoins()+loot);
+void Player::winMonster(int loot) {
+    this->level += 1;
+    this->job->setCoins(this->getCoins() + loot);
 }
 
-void Player::loseToMonster( int damage ){
+void Player::loseToMonster(int damage) {
     this->healthPoints = std::max(0, this->healthPoints - damage);
 }
 
-void Player::closeEncounter(){
-    this->healthPoints = std::max(0, this->healthPoints - 10 ); //TODO - SHELLY - consts
+void Player::closeEncounter() {
+    this->healthPoints = std::max(0, this->healthPoints - CLOSE_ENCOUNTER_DAMAGE);
 }
 
-void Player::applyDarknessConfusion(){
-    this->healthPoints = std::max(0, this->healthPoints-1);
+void Player::applyDarknessConfusion() {
+    this->healthPoints = std::max(0, this->healthPoints - SOLAR_ECLIPSE_EXPOSURE);
 }
 
-void Player::applyDarknessMagic(){
-    this->healthPoints = std::min(this->getMaxHealthPoints(), this->healthPoints+1);
+void Player::applyDarknessMagic() {
+    this->healthPoints = std::min(this->getMaxHealthPoints(), this->healthPoints + SOLAR_ECLIPSE_EXPOSURE);
 }
 
-int Player::getMaxHealthPoints(){
-     return this->job->getMaxHealthPoints();
+int Player::getMaxHealthPoints() {
+    return this->job->getMaxHealthPoints();
 }
 
-void Player::buyPotions(int potionAmount){
-    this->healthPoints = std::max(this->getMaxHealthPoints(), this->getHealthPoints() + potionAmount * 10 );
-    this->job->setCoins(this->getCoins() - potionAmount * 5);
+void Player::buyPotions(int potionAmount) {
+    this->healthPoints = std::min(this->getMaxHealthPoints(), 
+        this->getHealthPoints() + (potionAmount * POTION_HEALTHPOINTS));
+    this->job->setCoins(this->getCoins() - potionAmount * POTION_COST);
 }
 
-string Player::combatMonster( Monster& monster){
+string Player::combatMonster(Monster& monster) {
     return this->job->combatMonster(*this, monster);
 }
 
-string Player::reactToSolarEclipse(){
+string Player::reactToSolarEclipse() {
     return this->job->reactToSolarEclipse(*this);
 }
 
-string Player::reactToPotionsMerchant(){
-    this->character->reactToPotionsMerchant(*this);
+string Player::reactToPotionsMerchant() {
+    return this->character->reactToPotionsMerchant(*this);
 }
 
-bool Player::operator<(const Player& other) const {
+bool Player::isStillPlaying() const {
+    return this->getHealthPoints() > 0;
+}
+
+bool Player::operator<(Player const& other) const {
     if (level != other.level) {
         return level > other.level;
     }
-
     if (getCoins() != other.getCoins()) {
         return getCoins() > other.getCoins();
     }
-
     return name < other.name;
-}
-
-bool Player::isStillPlaying() const{
-    return this->getHealthPoints() > 0;
 }

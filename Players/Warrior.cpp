@@ -1,12 +1,14 @@
-#include <Job.h>
-#include <Player.h>
-#include <../Events/Monster.h>
-#include <Utilities.h>
+#include "Job.h"
+#include "Player.h"
+#include "../Events/Monster.h"
+#include "../Utilities.h"
+#include "Warrior.h"
+#include <iostream>
 
-//TODO - SHELLY - consts
+Warrior::Warrior(int maxHealthPoints) : Job(maxHealthPoints,DEFAULT_COINS) {}
 
 int Warrior::calculateCombatPower(int force, int level) const {
-     return force * 2 + level;
+     return (force * WARRIOR_FORCE_FACTOR) + level;
 }
 
 string Warrior::combatMonster(Player& player, Monster& monster) const{
@@ -24,4 +26,13 @@ string Warrior::combatMonster(Player& player, Monster& monster) const{
 
 string Warrior::printJobName() const{
      return "Warrior";
+}
+
+string Warrior::reactToSolarEclipse( Player& player) const {
+     player.applyDarknessConfusion();
+     return getSolarEclipseMessage(player,-1);
+}
+
+std::unique_ptr<Job> Warrior::clone() const {
+        return std::make_unique<Warrior>(*this);
 }

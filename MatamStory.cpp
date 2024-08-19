@@ -1,281 +1,250 @@
-
-#include "MatamStory.h"
-#include <MonsterPack.h>
 #include "Utilities.h"
-#include <memory>
+#include "MatamStory.h"
+#include "Events/MonsterEventFactory.h"
+#include "Events/SolarEclipseFactory.h"
+#include "Events/PotionsMerchantFactory.h"
 #include <algorithm>
-#include <../Events/Factories/MonsterFactory.h>
-#include <../Events/Factories/SingleMonsterFactory.h>
-#include <../Events/Factories/SnailFactory.h>
-#include <../Events/Factories/SlimeFactory.h>
-#include <../Events/Factories/BalrogFactory.h>
-#include <../Events/Factories/MonsterEventFactory.h>
-#include <../Events/Factories/PotionsMerchantFactory.h>
-#include <../Events/Factories/SolarEclipseFactory.h>
-#include <../Players/Factories/WarriorFactory.h>
-#include <../Players/Factories/MagicianFactory.h>
-#include <../Players/Factories/ArcherFactory.h>
-#include <../Players/Factories/ResponsibleFactory.h>
-#include <../Players/Factories/RiskTakingFactory.h>
+#include <memory>
 
-string getNextWord(string line)
-{
-    string word = line.substr(0, line.find(" "));
-    line.erase(0, line.find(" ") + 1);
+std::string MatamStory::extractNextWord(std::string& line) {
+    size_t pos = line.find(' ');
+    std::string word = (pos == std::string::npos) ? line : line.substr(0, pos);
+    line = (pos == std::string::npos) ? "" : line.substr(pos + 1);
     return word;
 }
 
-std::shared_ptr<Monster> monsterFromString(string str)
-{
-    std::shared_ptr<Monster> monster = nullptr;
-    if (str == "Snail")
-    {
-        SnailFactory snailFactory;
-        monster = snailFactory.createMonster();
+std::unique_ptr<Monster> MatamStory::createMonsterFromType(const std::string& type) {
+    if (type == "Snail") {
+        return SnailFactory{}.createMonster();
+    } else if (type == "Balrog") {
+        return BalrogFactory{}.createMonster();
+    } else if (type == "Slime") {
+        return SlimeFactory{}.createMonster();
     }
-    else if (str == "Balrog")
-    {
-        BalrogFactory balrogFactory;
-        monster = balrogFactory.createMonster();
-    }
-    else if (str == "Slime")
-    {
-        SlimeFactory slimeFactory;
-        monster = slimeFactory.createMonster();
-    }
-    return monster;
+    return nullptr;
 }
 
-std::unique_ptr<JobFactory> jobFactoryFromString(const std::string& jobType) {
+std::shared_ptr<JobFactory> MatamStory::createJobFactory(const std::string& jobType) {
     if (jobType == "Warrior") {
-        return std::make_unique<WarriorFactory>();
+        return std::make_shared<WarriorFactory>();
     } else if (jobType == "Archer") {
-        return std::make_unique<ArcherFactory>();
+        return std::make_shared<ArcherFactory>();
     } else if (jobType == "Magician") {
-        return std::make_unique<MagicianFactory>();
-    } else {
-        throw std::invalid_argument("Invalid job type");
+        return std::make_shared<MagicianFactory>();
     }
+    throw std::invalid_argument("Invalid job type");
 }
 
-std::unique_ptr<CharacterFactory> characterFactoryFromString(const std::string &characterType){
-     if (characterType == "Responsible") {
-        return std::make_unique<ResponsibleFactory>();
+std::shared_ptr<CharacterFactory> MatamStory::createCharacterFactory(const std::string& characterType) {
+    if (characterType == "Responsible") {
+        return std::make_shared<ResponsibleFactory>();
     } else if (characterType == "RiskTaker") {
-        return std::make_unique<RiskTakingFactory>();
-    } else {
-        throw std::invalid_argument("Invalid character type");
+        return std::make_shared<RiskTakingFactory>();
     }
+    throw std::invalid_argument("Invalid character type");
 }
 
-readEventsFile(std::istream &eventsStream) 
-{
-    /*===== TODO: Open and read events file =====*/
-    string line;
-    string text;
-    string word;
-    while (getline(eventsStream, line))
-    {   
-        text += line + " ";
-    }
-    while ((word = getNextWord(text)) != "")
+std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::string& line) {
+    int packSize;
+    try 
     {
-        std::shared_ptr<Event> event;
-        if (word == "Pack")
-        {
-            auto pack = parsePack(text);
-            MonsterEventFactory monsterEventFactory = MonsterEventFactory(pack);
-            event = monsterEventFactory.createEvent();
-        }
-        else if (word == "SolarEclipse")
-        {
-            SolarEclipseFactory solarElipseFactory;
-            event = solarElipseFactory.createEvent();
-        }
-        else if (word == "PotionsMerchant")
-        {
-            PotionsMerchantFactory potionsMerchantFactory;
-            event = potionsMerchantFactory.createEvent();
-        }
-        else
-        {
-            std::shared_ptr<Monster> monster = monsterFromString(firstWord);
-            MonsterEventFactory monsterEventFactory(monster);
-            event = monsterEventFactory.createEvent();
-        }
-
-        eventsList.push_back(event);
+        packSize = std::stoi(extractNextWord(line));
     }
-    /*==========================================*/
-}
-
-readPlayersFile(std::istream &playersStream)
-{
-    /*===== TODO: Open and Read players file =====*/
-    string line;
-    while (getline(playersStream, line))
+    catch(...)
     {
-        string name = getNextWord(line);
+        throw std::invalid_argument("Invalid Event File");
 
-        std::unique_ptr<JobFactory> jobFactory = jobFactoryFromString(getNextWord(line));
-        std::unique_ptr<CharacterFactory> characterFactory = characterFactoryFromString(getNextWord(line));
-        std::shared_ptr<Player> player = std::make_shared<Player>(
-            name, 1, 10, 100, 10, std::move(jobFactory), std::move(characterFactory));
-        playersList.push_back(player);
     }
+    auto pack = std::make_unique<MonsterPack>();
 
-    /*============================================*/
-}
-
-MatamStory::MatamStory(std::istream &eventsStream, std::istream &playersStream)
-{
-    readEventsFile(eventsStream);
-    readPlayersFile(playersStream);
-    this->m_turnIndex = 1;
-}
-
-std::shared_ptr<MonsterPack> MatamStory::parsePack(string& currLine) {
-    int packSize = std::stoi(getNextWord(currLine));
-    auto pack = std::make_shared<MonsterPack>();
-
-    for (int i = 0; i < packSize; i++) {
-        string word = getNextWord(currLine);
+    for (int i = 0; i < packSize; ++i) {
+        std::string word = extractNextWord(line);
         if (word == "Pack") {
-            auto subPack = parsePack(currLine);
-            pack->addMonster(subPack);
-        } else {
-            auto monster = monsterFromString(word);
-            pack->addMonster(monster);
+            auto subPack = parseMonsterPack(line);
+            pack->addMonster(std::move(subPack));
+        } 
+        else if(word == "Snail" || word == "Slime" || word == "Balrog") {
+            auto monster = createMonsterFromType(word);
+            pack->addMonster(std::move(monster));
+        }
+        else {
+            throw std::invalid_argument("Invalid Event File");
         }
     }
 
     return pack;
 }
 
-void MatamStory::playTurn(Player &player)
-{
-
-    /**
-     * Steps to implement (there may be more, depending on your design):
-     * 1. Get the next event from the events list
-     * 2. Print the turn details with "printTurnDetails"
-     * 3. Play the event
-     * 4. Print the turn outcome with "printTurnOutcome"
-     */
-    if (eventsList.empty()) {
-        return; // No events to process
-    }
-
-    // Get the current event in a circular manner
-    auto& event = eventsList[m_turnIndex % eventsList.size()];
-    
-    // Print the turn details
-    printTurnDetails(m_turnIndex, player, *event);
-
-    // Apply the event to the player
-    std::string outcome = event->handleEvent(player);
-    
-    // Print the outcome of the turn
-    printTurnOutcome(outcome);
-
-    m_turnIndex++;
+std::vector<Player> MatamStory::sortPlayersByScore(std::vector<Player> players) {
+    // std::sort(players.begin(), players.end(),
+    //     [](const Player& a, const Player& b) {
+    //         return a < b; // Assuming Player class has a valid operator<
+    //     });
+    return players;
 }
 
-void MatamStory::playRound()
-{
 
+void MatamStory::readEventsFile(std::istream& eventsStream)
+{
+    std::string line;
+
+    while (std::getline(eventsStream, line)) {
+        //std::unique_ptr<Event> event;
+        std::string firstWord = extractNextWord(line);
+
+        if (firstWord == "Pack") {
+            auto pack = parseMonsterPack(line);
+            MonsterEventFactory factory(std::move(pack));
+            eventsList.push_back(std::move(factory.createEvent()));
+            //event = factory.createEvent();
+        } else if (firstWord == "SolarEclipse") {
+            SolarEclipseFactory factory;
+            eventsList.push_back(std::move(factory.createEvent()));
+            //event = factory.createEvent();
+        } else if (firstWord == "PotionsMerchant") {
+            PotionsMerchantFactory factory;
+            eventsList.push_back(std::move(factory.createEvent()));
+            //event = factory.createEvent();
+        } else if(firstWord == "Snail" || firstWord == "Slime" || firstWord == "Balrog") {
+            auto monster = createMonsterFromType(firstWord);
+            MonsterEventFactory factory(std::move(monster));
+            eventsList.push_back(std::move(factory.createEvent()));
+            //event = factory.createEvent();
+        }
+        else {
+            throw std::invalid_argument("Invalid Event File");
+        }
+
+        //eventsList.push_back(std::move(event));
+    }
+}
+
+void MatamStory::readPlayersFile(std::istream& playersStream)
+{
+    std::string line;
+    while (std::getline(playersStream, line)) {
+        std::string temp;
+        std::string name = extractNextWord(line);
+        temp = extractNextWord(line);
+        std::shared_ptr<JobFactory> jobFactory = nullptr;
+        std::shared_ptr<CharacterFactory> characterFactory = nullptr;
+        if(temp == "Warrior" || temp == "Magician" || temp == "Archer")
+        {
+            jobFactory = createJobFactory(temp);
+        }
+        else
+        {
+            throw std::invalid_argument("Invalid Players File");
+        }
+        temp = extractNextWord(line);
+        if(temp == "Responsible" || temp == "RiskTaking")
+        {
+            characterFactory = createCharacterFactory(temp);
+        }
+        else
+        {
+            throw std::invalid_argument("Invalid Players File");
+        }
+        Player player(name, DEFAULT_LEVEL, DEFAULT_COINS, DEFAULT_HEALTH_POINTS, jobFactory, characterFactory);
+        playersList.push_back(player);
+    }
+}
+
+MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream)
+    : m_turnIndex(1) {
+        MatamStory::readEventsFile(eventsStream);
+        MatamStory::readPlayersFile(playersStream);
+    }
+
+    
+
+
+void MatamStory::playTurn(Player& player) {
+    if (eventsList.empty()) return;
+
+    auto& event = eventsList[m_turnIndex % eventsList.size()];
+
+    printTurnDetails(m_turnIndex, player, *event);
+
+    std::string outcome = event->handleEvent(player);
+
+    printTurnOutcome(outcome);
+
+    ++m_turnIndex;
+}
+
+void MatamStory::playRound() {
     printRoundStart();
 
-    /*=====  Play a turn for each player =====*/
     for (auto& player : playersList) {
-        if(player->isStillPlaying()){
-            playTurn(*player);
+        if (player.isStillPlaying()) {
+            playTurn(player);
         }
-        
     }
-    /*=============================================*/
 
     printRoundEnd();
-
     printLeaderBoardMessage();
 
-    /*===== Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
-    std::vector<std::shared_ptr<Player>> sortedPlayers(playersList.begin(), playersList.end());
-
-    std::sort(sortedPlayers.begin(), sortedPlayers.end(), 
-    [](const std::shared_ptr<Player>& a, const std::shared_ptr<Player>& b) {
-        return *a < *b; // Use the overloaded operator< for comparison
-    });
-
+    //auto sortedPlayers = sortPlayersByScore(std::move(playersList));
     unsigned int index = 1;
-    for (const auto& player : sortedPlayers) {
-        printLeaderBoardEntry(index, *player);
+    //for (const auto& player : sortedPlayers) {
+    for (const auto& player : playersList) {
+        printLeaderBoardEntry(index, player);
         ++index;
     }
-    /*=======================================================================================*/
 
     printBarrier();
 }
 
-bool MatamStory::isGameOver() const
-{
-    bool allPlayersDead = true;
-    bool anyPlayerLevel10OrHigher = false;
+bool MatamStory::isGameOver() const {
+        bool allPlayersDead = true;
+        bool anyPlayerWinner = false;
 
     // Check the status of each player
     for (const auto& player : playersList) {
-        if (player->getLevel() >= 10) {
-            anyPlayerLevel10OrHigher = true;
+        if (player.getLevel()  >= WINNER_LEVEL) {
+            anyPlayerWinner = true;
         }
 
-        if (player->getHealthPoints() > 0) {
+        if (player.isStillPlaying()) {
             allPlayersDead = false;
         }
     }
 
     // The game is over if any player reached level 10 or if all players are dead
-    return anyPlayerLevel10OrHigher || allPlayersDead;
+    return anyPlayerWinner || allPlayersDead;
 }
 
-void MatamStory::play()
-{
+void MatamStory::play() {
     printStartMessage();
-    /*===== Print start message entry for each player using "printStartPlayerEntry" =====*/
+
     unsigned int index = 1;
     for (const auto& player : playersList) {
-        printStartPlayerEntry(index, *player);
+        printStartPlayerEntry(index, player);
         ++index;
     }
-    /*=========================================================================================*/
-   
+
     printBarrier();
 
-    while (!isGameOver())
-    {
+    while (!isGameOver()) {
         playRound();
     }
 
     printGameOver();
-    /*===== Print either a "winner" message or "no winner" message =====*/
-    std::vector<std::shared_ptr<Player>> sortedPlayers(playersList.begin(), playersList.end());
-
-    std::sort(sortedPlayers.begin(), sortedPlayers.end(), 
-    [](const std::shared_ptr<Player>& a, const std::shared_ptr<Player>& b) {
-        return *a < *b; // Use the overloaded operator< for comparison
-    });
 
     bool anyPlayerWinner = false;
-    for (const auto& player : sortedPlayers) {
-        if (player->getLevel() >= 10) {
-            printWinner(*player);
+    //auto sortedPlayers = sortPlayersByScore(std::move(playersList));
+
+    //for (const auto& player : sortedPlayers) {
+    for (const auto& player : playersList) {
+        if (player.getLevel() >= WINNER_LEVEL) {
+            printWinner(player);
             anyPlayerWinner = true;
-            break; // Only one winner is needed, so break after finding the first
+            break;
         }
     }
 
     if (!anyPlayerWinner) {
         printNoWinners();
     }
-    /*========================================================================*/
-    
 }

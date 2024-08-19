@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Players/Player.h"
-#include <Monster.h>
+#include "Monster.h"
 #include <vector>
 
 class Event {
@@ -11,31 +11,9 @@ public:
      *
      * @return - the description of the event
     */
-    virtual string getDescription() const;
+    virtual string getDescription() const = 0;
 
     virtual string handleEvent(Player& player) = 0;
-};
 
-class MonsterEvent: public Event {
-    private:
-         std::unique_ptr<Monster> monster;  
-
-    public:
-        MonsterEvent(std::unique_ptr<Monster> monster):monster(std::move(monster)){}
-        string handleEvent(Player& player) override;
-        string getDescription() const override;  
-};
-
-class SolarEclipse: public Event {
-        
-    public:
-        string handleEvent(Player& player) override;
-        string getDescription() const override;   
-};
-
-class PotionsMerchant: public Event {
-        
-    public:
-        string handleEvent(Player& player) override;  
-        string getDescription() const override; 
+    virtual ~Event() = default;
 };

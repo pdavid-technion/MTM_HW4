@@ -6,7 +6,7 @@
 class BalrogFactory : public SingleMonsterFactory {
 public:
     BalrogFactory() = default;
-    std::shared_ptr<Monster> createMonster() const override {
-        return std::make_shared<Balrog>(); // TODO - SHELLY - Add consts
+    std::unique_ptr<Monster> createMonster() const override {
+        return std::make_unique<Balrog>();
     }
 };

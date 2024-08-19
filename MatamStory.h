@@ -2,66 +2,44 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
+#include <string>
 #include "Players/Player.h"
 #include "Events/Event.h"
-#include "Events/Factories/SnailFactory.h"
-#include "Events/Factories/BalrogFactory.h"
-#include "Events/Factories/BalrogFactory.h"
-#include "Players/Factories/WarriorFactory.h"
+#include "Events/MonsterPack.h"
+#include "Events/SnailFactory.h"
+#include "Events/BalrogFactory.h"
+#include "Events/SlimeFactory.h"
+#include "Players/WarriorFactory.h"
+#include "Players/ArcherFactory.h"
+#include "Players/MagicianFactory.h"
+#include "Players/ResponsibleFactory.h"
+#include "Players/RiskTakingFactory.h"
 
+class Player;
 
-
-
-class MatamStory{
+class MatamStory {
 private:
     unsigned int m_turnIndex;
-    std::vector<std::shared_ptr<Event>> eventsList;
-    std::vector<std::shared_ptr<Player>> playersList;
-    /**
-     * Playes a single turn for a player
-     *
-     * @param player - the player to play the turn for
-     *
-     * @return - void
-    */
+    std::vector<std::unique_ptr<Event>> eventsList;
+    std::vector<Player> playersList;
+
     void playTurn(Player& player);
-
-    /**
-     * Plays a single round of the game
-     *
-     * @return - void
-    */
     void playRound();
-
-    /**
-     * Checks if the game is over
-     *
-     * @return - true if the game is over, false otherwise
-    */
     bool isGameOver() const;
 
-    string getNextWord(string str);
-    std::shared_ptr<Monster> monsterFromString(string str);
-    std::unique_ptr<JobFactory> jobFactoryFromString(const std::string& jobType);
-    std::unique_ptr<CharacterFactory> characterFactoryFromString(const std::string& characterType);
-    std::shared_ptr<MonsterPack> parsePack(string& currLine);
+    void readEventsFile(std::istream& eventsStream);
+    void readPlayersFile(std::istream& playersStream);
+
+    std::string extractNextWord(std::string& line);
+    std::unique_ptr<Monster> createMonsterFromType(const std::string& type);
+    std::shared_ptr<JobFactory> createJobFactory(const std::string& jobType);
+    std::shared_ptr<CharacterFactory> createCharacterFactory(const std::string& characterType);
+    std::unique_ptr<MonsterPack> parseMonsterPack(std::string& line);
+    std::vector<Player> sortPlayersByScore(std::vector<Player> players); // Updated to take and return std::vector<Player>
 
 public:
-    /**
-     * Constructor of MatamStory class
-     *
-     * @param eventsStream - events input stream (file)
-     * @param playersStream - players input stream (file)
-     *
-     * @return - MatamStory object with the given events and players
-     *
-    */
     MatamStory(std::istream& eventsStream, std::istream& playersStream);
 
-    /**
-     * Plays the entire game
-     *
-     * @return - void
-    */
     void play();
 };
