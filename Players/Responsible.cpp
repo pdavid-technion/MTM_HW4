@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "../Utilities.h"
 #include "Responsible.h"
-#include "GameConsts.h"
+#include "PlayerConsts.h"
 
 string Responsible::reactToPotionsMerchant( Player& player) const{
     int maxPotionsAffordable = player.getCoins() / POTION_COST;

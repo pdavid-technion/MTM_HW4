@@ -4,31 +4,20 @@
 class SingleMonster: public Monster {
     public:
         
-        ~SingleMonster() = default;
-        SingleMonster(int combatPower, int loot, int damage):
-            combatPower(combatPower),loot(loot), damage(damage){}
+        virtual ~SingleMonster() = default;
+        SingleMonster(int combatPower, int loot, int damage);
 
-        int getCombatPower() const override {
-            return combatPower;
-        }
+        int getCombatPower() const override;
 
-        int getLoot() const override{
-            return loot;
-        }
+        int getLoot() const override;
 
-        int getDamage() const override{
-            return damage;
-        }
+        int getDamage() const override;
 
-        bool isPack() const override{
-            return false;
-        }
+        bool isPack() const override;
 
-        void updateCombatPower(int extraPower){
-            this->combatPower += extraPower;
-        }
+        void updateCombatPower(int extraPower);
 
-        private:
+        protected:
             int combatPower;
             int loot;
             int damage;

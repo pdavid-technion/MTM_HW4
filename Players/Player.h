@@ -4,7 +4,7 @@
 #include "JobFactory.h"
 #include "CharacterFactory.h"
 #include "../Events/Monster.h"
-#include "GameConsts.h"
+#include "PlayerConsts.h"
 
 using std::string;
 
@@ -25,13 +25,9 @@ public:
             std::shared_ptr<JobFactory> jobFactory = nullptr,
             std::shared_ptr<CharacterFactory> characterFactory = nullptr);
 
-    // Player(const Player&) = delete;
-    // Player& operator=(const Player&) = delete;
-
     Player(Player&& other) noexcept;
     Player(const Player& other);
 
-    // // Implement move assignment operator
     Player& operator=(Player&& other) noexcept;
     
     ~Player() = default;

@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "../Events/Monster.h"
 #include "Archer.h"
-#include "GameConsts.h"
+#include "PlayerConsts.h"
 
 Archer::Archer(int coins) : Job(DEFAULT_HEALTH_POINTS, coins) {}
 

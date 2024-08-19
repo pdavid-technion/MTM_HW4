@@ -1,7 +1,7 @@
 #pragma once
 #include "./Player.h"
 #include "../Events/Event.h"
-#include "GameConsts.h"
+#include "PlayerConsts.h"
 
 class Job {
 public:

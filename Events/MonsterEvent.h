@@ -13,7 +13,9 @@ class MonsterEvent: public Event {
 
     public:
         //MonsterEvent(std::unique_ptr<Monster> monster):monster(std::move(monster)){}
-        explicit MonsterEvent(Monster* monster); 
+        explicit MonsterEvent(std::unique_ptr<Monster>);
+        explicit MonsterEvent(Monster* monsterPtr); 
+        explicit MonsterEvent(string& monsterName); 
         string handleEvent(Player& player) override;
         string getDescription() const override; 
          ~MonsterEvent() = default;

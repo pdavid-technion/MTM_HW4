@@ -27,13 +27,15 @@ private:
     void playTurn(Player& player);
     void playRound();
     bool isGameOver() const;
+    void readEventsFile(std::istream& eventsStream);
+    void readPlayersFile(std::istream& playersStream);
 
     std::string extractNextWord(std::string& line);
     std::unique_ptr<Monster> createMonsterFromType(const std::string& type);
     std::shared_ptr<JobFactory> createJobFactory(const std::string& jobType);
     std::shared_ptr<CharacterFactory> createCharacterFactory(const std::string& characterType);
     std::unique_ptr<MonsterPack> parseMonsterPack(std::string& line);
-    std::vector<Player> sortPlayersByScore(std::vector<Player> players); // Updated to take and return std::vector<Player>
+    std::vector<Player*> sortPlayersByScore(std::vector<Player> players); // Updated to take and return std::vector<Player>
 
 public:
     MatamStory(std::istream& eventsStream, std::istream& playersStream);

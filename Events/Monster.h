@@ -17,11 +17,7 @@ class Monster{
         virtual void reactToCombat() = 0;
         virtual string getDescription() const = 0;
 
-        virtual void addMonster(std::unique_ptr<Monster>) {
-            throw std::runtime_error("Operation not supported");
-        }
+        virtual void addMonster(std::unique_ptr<Monster>)  = 0;
 
-        virtual const std::vector<std::unique_ptr<Monster>>& getMonsters() const {
-            throw std::runtime_error("Opertaion not supported");
-        }
+        virtual const std::vector<std::unique_ptr<Monster>>& getMonsters() const = 0;
 };

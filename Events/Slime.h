@@ -1,44 +1,28 @@
 #pragma once
 #include "SingleMonster.h"
 #include <string>
-#include "GameConsts.h"
+#include "../Players/PlayerConsts.h"
 
 class Slime: public SingleMonster {
     
     public:
     Slime(  int combatPower = SLIME_COMBAT_POWER,
             int loot = SLIME_LOOT,
-            int damage = SLIME_DAMAGE): SingleMonster(combatPower,loot,damage){}
+            int damage = SLIME_DAMAGE);
     ~Slime() = default;
-    string getDescription() const override{
-        return "Slime (power "+std::to_string(this->getCombatPower())+", loot " +
-        std::to_string(this->getLoot()),", damage " + std::to_string(this->getDamage())+")";
+    string getDescription() const override;
 
-    }
+    int getCombatPower() const override;
+    
+    int getLoot() const override;
+    
+    int getDamage() const override;
+    
+    bool isPack() const override;
 
-    int getCombatPower() const override{
-        return this->getCombatPower();
-    }
-    
-    int getLoot() const override{
-        return this->getLoot();
-    }
-    
-    int getDamage() const override{
-        return this->getDamage();
-    }
-    
-    bool isPack() const override{
-        return false;
-    }
-
-    void reactToCombat() override{}
+    void reactToCombat() override;
       
-    void addMonster(std::unique_ptr<Monster>) override{
-            throw std::runtime_error("Operation not supported");
-    }
+    void addMonster(std::unique_ptr<Monster>) override;
 
-    const std::vector<std::unique_ptr<Monster>>& getMonsters() const override{
-            throw std::runtime_error("Opertaion not supported");
-    }
+    const std::vector<std::unique_ptr<Monster>>& getMonsters() const override;
 };

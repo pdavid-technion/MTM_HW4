@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "../Utilities.h"
 #include "RiskTaking.h"
-#include "GameConsts.h"
+#include "PlayerConsts.h"
 
 string RiskTaking::reactToPotionsMerchant( Player& player) const{
     if(player.getHealthPoints() < LOW_HEALTH_THRESHOLD ){

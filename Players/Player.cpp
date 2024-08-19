@@ -3,7 +3,7 @@
 #include "Job.h"
 #include "Character.h"
 #include <string>
-#include <GameConsts.h>
+#include <PlayerConsts.h>
 
 Player::Player(std::string name,
                 int level,
@@ -36,15 +36,10 @@ Player::Player(Player&& other) noexcept
 
 Player& Player::operator=(Player&& other) noexcept {
     if (this != &other) {
-
-
-        // Transfer the non-pointer data members
         name = std::move(other.name);
         level = other.level;
         force = other.force;
         healthPoints = other.healthPoints;
-
-        // Deep copy the job and character from the other player
         job = other.job ? other.job->clone() : nullptr;
         character = other.character ? other.character->clone() : nullptr;
     }
