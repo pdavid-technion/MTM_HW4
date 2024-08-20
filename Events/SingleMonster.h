@@ -1,29 +1,23 @@
 #pragma once
-#include <Monster.h>
+#include "Monster.h"
 
 class SingleMonster: public Monster {
     public:
         
-        SingleMonster(int combatPower, int loot, int damage):
-            combatPower(combatPower),loot(loot), damage(damage){}
+        virtual ~SingleMonster() = default;
+        SingleMonster(int combatPower, int loot, int damage);
 
-        int getCombatPower() const override {
-            return combatPower;
-        }
+        int getCombatPower() const override;
 
-        int getLoot() const override{
-            return loot;
-        }
+        int getLoot() const override;
 
-        int getDamage() const override{
-            return damage;
-        }
+        int getDamage() const override;
 
-        bool isPack() const override{
-            return false;
-        }
+        bool isPack() const override;
 
-        private:
+        void updateCombatPower(int extraPower);
+
+        protected:
             int combatPower;
             int loot;
             int damage;
