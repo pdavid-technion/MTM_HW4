@@ -13,7 +13,7 @@ string RiskTaking::reactToPotionsMerchant( Player& player) const{
 }
 
 string RiskTaking::printCharacterName() const{
-    return "RiskTaking";
+    return RISK_TAKING;
 }
 
 std::unique_ptr<Character> RiskTaking::clone() const {

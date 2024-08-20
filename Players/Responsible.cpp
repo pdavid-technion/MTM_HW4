@@ -15,7 +15,7 @@ string Responsible::reactToPotionsMerchant( Player& player) const{
 }
 
 string Responsible::printCharacterName() const{
-    return "Responsible";
+    return RESPONSIBLE;
 }
 
 std::unique_ptr<Character> Responsible::clone() const {

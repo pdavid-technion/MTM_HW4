@@ -2,6 +2,7 @@
 
 #include "../Players/Player.h"
 #include "Monster.h"
+#include "MonsterPack.h"
 #include <vector>
 #include "Event.h"
 
@@ -13,7 +14,8 @@ class MonsterEvent: public Event {
 
     public:
         //MonsterEvent(std::unique_ptr<Monster> monster):monster(std::move(monster)){}
-        explicit MonsterEvent(std::unique_ptr<Monster>);
+        explicit MonsterEvent(std::unique_ptr<Monster> newMonster);
+        explicit MonsterEvent(std::unique_ptr<MonsterPack> newMonsterPack);
         explicit MonsterEvent(Monster* monsterPtr); 
         explicit MonsterEvent(string& monsterName); 
         string handleEvent(Player& player) override;

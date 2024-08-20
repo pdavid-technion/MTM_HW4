@@ -59,7 +59,7 @@ class MonsterPack: public Monster{
         virtual string getDescription() const override{
             return "Pack of " + std::to_string(monsters.size())+ " members (power " +
             std::to_string(this->getCombatPower())+", loot " +
-            std::to_string(this->getLoot()),", damage " + std::to_string(this->getDamage())+")";
+            std::to_string(this->getLoot())+", damage " + std::to_string(this->getDamage())+")";
         }
 
     private:

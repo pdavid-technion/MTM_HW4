@@ -3,6 +3,7 @@
 #include "../Events/Monster.h"
 #include "../Utilities.h"
 #include "Magician.h"
+#include "PlayerConsts.h"
 
 Magician::Magician():Job(){}
 
@@ -12,7 +13,7 @@ string Magician::reactToSolarEclipse( Player& player ) const {
 }
 
 string Magician::printJobName() const{
-     return "Magician";
+     return MAGICIAN;
 }
 
 int Magician::calculateCombatPower(int force, int level) const{

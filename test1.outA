@@ -27,7 +27,7 @@ Baraa lost the encounter and took 9001 damage!
 Round has ended!
 Leader board is as follows:
 Ranking    Player Name     Level     Force HP    Coins
-1          Daniel          2         5     140   12
+1          Daniel          2         5     90    12
 2          Baraa           1         5     0     20
 3          Regev           1         5     50    10
 
@@ -37,18 +37,18 @@ New round starts!
 
 Turn: 4
 Player: Daniel, Warrior with Responsible character (level 2, force 5)
-Event: SolarEclipse
+Event: Solar Eclipse
 Daniel was affected by a solar eclipse! their force has changed by -1!
 
 Turn: 5
 Player: Regev, Magician with RiskTaking character (level 1, force 5)
-Event: PotionsMerchant
+Event: Potions Merchant
 Regev bought 0 potions!
 
 Round has ended!
 Leader board is as follows:
 Ranking    Player Name     Level     Force HP    Coins
-1          Daniel          2         4     140   12
+1          Daniel          2         5     40    12
 2          Baraa           1         5     0     20
 3          Regev           1         5     50    10
 
@@ -57,7 +57,7 @@ Ranking    Player Name     Level     Force HP    Coins
 New round starts!
 
 Turn: 6
-Player: Daniel, Warrior with Responsible character (level 2, force 4)
+Player: Daniel, Warrior with Responsible character (level 2, force 5)
 Event: Snail (power 5, loot 2, damage 10)
 Daniel won the encounter, gained 2 coins and leveled up!
 
@@ -69,7 +69,7 @@ Regev lost the encounter and took 50 damage!
 Round has ended!
 Leader board is as follows:
 Ranking    Player Name     Level     Force HP    Coins
-1          Daniel          3         4     130   14
+1          Daniel          3         5     30    14
 2          Baraa           1         5     0     20
 3          Regev           1         5     0     10
 
@@ -78,14 +78,14 @@ Ranking    Player Name     Level     Force HP    Coins
 New round starts!
 
 Turn: 8
-Player: Daniel, Warrior with Responsible character (level 3, force 4)
+Player: Daniel, Warrior with Responsible character (level 3, force 5)
 Event: Balrog (power 17, loot 100, damage 9001)
 Daniel lost the encounter and took 9001 damage!
 
 Round has ended!
 Leader board is as follows:
 Ranking    Player Name     Level     Force HP    Coins
-1          Daniel          3         4     0     14
+1          Daniel          3         5     0     14
 2          Baraa           1         5     0     20
 3          Regev           1         5     0     10
 

@@ -3,12 +3,12 @@
 #include "PotionsMerchant.h"
 #include <string> 
 #include <iostream>
+#include "../Players/PlayerConsts.h"
 
 string PotionsMerchant::handleEvent(Player& player){
    return player.reactToPotionsMerchant();
 }
 
 string PotionsMerchant::getDescription() const{
-std::cout << " PotionsMerchant::getDescription()" << std::endl;
-   return "Potions Merchant";
+   return POTIONS_MERCHANT;
 }

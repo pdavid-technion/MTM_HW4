@@ -3,6 +3,7 @@
 #include "SolarEclipse.h"
 #include <string> 
 #include <iostream>
+#include "../Players/PlayerConsts.h"
  
  
  string SolarEclipse::handleEvent(Player& player){
@@ -10,6 +11,5 @@
  }
 
 string SolarEclipse::getDescription() const{
-   std::cout << " SolarEclipse::getDescription()" << std::endl;
-   return "Solar Eclipse";
+   return SOLAR_ECLIPSE;
 }

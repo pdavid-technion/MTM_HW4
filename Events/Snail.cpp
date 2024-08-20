@@ -6,16 +6,13 @@
             int combatPower,
             int loot,
             int damage):
-            SingleMonster(combatPower,loot,damage){
-                 std::cout << "shula " << std::endl;
-                 std::cout << "shula "<<this->getDamage() << std::endl;
-            }
+            SingleMonster(combatPower,loot,damage){ }
 
 
     string Snail::getDescription() const {
-        std::cout << " Snail::getDescription()" << std::endl;
-        return "Snail (power "+std::to_string(this->getCombatPower())+", loot " +
-        std::to_string(this->getLoot()),", damage " + std::to_string(this->getDamage())+")";
+        string result = "Snail (power "+std::to_string(this->getCombatPower())+", loot " +
+        std::to_string(this->getLoot())+", damage " + std::to_string(this->getDamage())+")";
+        return result;
     }
 
     int Snail::getCombatPower() const {

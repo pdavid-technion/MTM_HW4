@@ -4,6 +4,7 @@
 #include "../Utilities.h"
 #include "Warrior.h"
 #include <iostream>
+#include "PlayerConsts.h"
 
 Warrior::Warrior(int maxHealthPoints) : Job(maxHealthPoints,DEFAULT_COINS) {}
 
@@ -25,7 +26,7 @@ string Warrior::combatMonster(Player& player, Monster& monster) const{
 }
 
 string Warrior::printJobName() const{
-     return "Warrior";
+     return WARRIOR;
 }
 
 string Warrior::reactToSolarEclipse( Player& player) const {

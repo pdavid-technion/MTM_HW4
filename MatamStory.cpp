@@ -1,8 +1,8 @@
 #include "Utilities.h"
 #include "MatamStory.h"
-#include "Events/MonsterEventFactory.h"
-#include "Events/SolarEclipseFactory.h"
-#include "Events/PotionsMerchantFactory.h"
+#include "Events/MonsterEvent.h"
+#include "Events/SolarEclipse.h"
+#include "Events/PotionsMerchant.h"
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -15,10 +15,6 @@
 }
 
 std::string MatamStory::extractNextWord(std::string& line) {
-    // size_t pos = line.find(' ');
-    // std::string word = (pos == std::string::npos) ? line : line.substr(0, pos);
-    // line = (pos == std::string::npos) ? "" : line.substr(pos + 1);
-    // return word;
 
       line = trim(line);
 
@@ -38,32 +34,32 @@ std::string MatamStory::extractNextWord(std::string& line) {
 }
 
 std::unique_ptr<Monster> MatamStory::createMonsterFromType(const std::string& type) {
-    if (!type.compare("Snail")) {
+    if (!type.compare(SNAIL)) {
         return SnailFactory{}.createMonster();
-    } else if (!type.compare("Balrog")) {
+    } else if (!type.compare(BALROG)) {
         return BalrogFactory{}.createMonster();
-    } else if (!type.compare("Slime")) {
+    } else if (!type.compare(SLIME)) {
         return SlimeFactory{}.createMonster();
     }
     return nullptr;
 }
 
 std::shared_ptr<JobFactory> MatamStory::createJobFactory(const std::string& jobType) {
-    if (!jobType.compare("Warrior")) {
+    if (!jobType.compare(WARRIOR)) {
         return std::make_shared<WarriorFactory>();
-    } else if (!jobType.compare("Archer")) {
+    } else if (!jobType.compare(ARCHER)) {
         return std::make_shared<ArcherFactory>();
-    } else if (!jobType.compare("Magician")) {
+    } else if (!jobType.compare(MAGICIAN)) {
         return std::make_shared<MagicianFactory>();
     }
     throw std::invalid_argument("Invalid job type");
 }
 
 std::shared_ptr<CharacterFactory> MatamStory::createCharacterFactory(const std::string& characterType) {
-    if (!characterType.compare("Responsible")) {
+    if (!characterType.compare(RESPONSIBLE)) {
 
         return std::make_shared<ResponsibleFactory>();
-    } else if (!characterType.compare("RiskTaking")) {
+    } else if (!characterType.compare(RISK_TAKING)) {
 
         return std::make_shared<RiskTakingFactory>();
     }
@@ -75,7 +71,7 @@ std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::string& line) {
     auto pack = std::make_unique<MonsterPack>();
     for (int i = 0; i < packSize; ++i) {
         std::string word = extractNextWord(line);
-        if (!word.compare("Pack")) {
+        if (!word.compare(PACK)) {
             auto subPack = parseMonsterPack(line);
             pack->addMonster(std::move(subPack));
         } else {
@@ -87,7 +83,7 @@ std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::string& line) {
     return pack;
 }
 
-std::vector<Player*> MatamStory::sortPlayersByScore(std::vector<Player> players) {
+std::vector<Player*> MatamStory::sortPlayersByScore() {
     std::vector<Player*> sortedPlayers;
     for( auto& player: playersList){
         sortedPlayers.push_back(&player);
@@ -95,7 +91,7 @@ std::vector<Player*> MatamStory::sortPlayersByScore(std::vector<Player> players)
 
     std::sort(sortedPlayers.begin(), sortedPlayers.end(),
     [] (Player* a, Player* b){ 
-        return ( *b < *a ); 
+        return ( *a > *b ); 
     });
 
     return sortedPlayers;
@@ -104,46 +100,30 @@ std::vector<Player*> MatamStory::sortPlayersByScore(std::vector<Player> players)
 void MatamStory::readEventsFile(std::istream& eventsStream)
 {
     std::string line;
-    MonsterEventFactory factory;// = new MonsterEventFactory();
 
     while (std::getline(eventsStream, line)) {
-        
-        // std::string firstWord = extractNextWord(line);
 
-        // if (!firstWord.compare("Pack")) {
-        //     auto pack = parseMonsterPack(line);
-        //     MonsterEventFactory factory(std::move(pack));
-        //     eventsList.push_back(std::move(factory.createEvent()));
+        std::string firstWord = extractNextWord(line);
+        if (!firstWord.compare(PACK)) {
+            auto pack = parseMonsterPack(line);
+            eventsList.push_back(std::make_unique<MonsterEvent>(std::move(pack)));
 
-        // } else if (!firstWord.compare("SolarEclipse")) {
+        } else if (!firstWord.compare(SOLAR_ECLIPSE)) {
 
-        //     SolarEclipseFactory factory;
+            eventsList.push_back(std::make_unique<SolarEclipse>());
 
-        //     eventsList.push_back(std::move(factory.createEvent()));
+        } else if (!firstWord.compare(POTIONS_MERCHANT)) {
 
+            eventsList.push_back(std::make_unique<PotionsMerchant>());
 
-        // } else if (!firstWord.compare("PotionsMerchant")) {
+        } else if(!firstWord.compare(SNAIL)  || (!firstWord.compare(SLIME)) || (!firstWord.compare(BALROG))) {
 
-        //     PotionsMerchantFactory factory;
+            eventsList.push_back(std::make_unique<MonsterEvent>(firstWord));
 
-        //     eventsList.push_back(std::move(factory.createEvent()));
-
-
-        // } else if(firstWord == "Snail"  || (!firstWord.compare("Slime")) || (!firstWord.compare("Balrog"))) {
-         
-        //     auto monster = createMonsterFromType(firstWord);
-        //     //MonsterEventFactory factory(std::move(monster));
-        //     auto a = std::make_unique<MonsterEvent>(std::make_unique<Snail>());
-        //     std::cout << "a->getDamage() "<< a->getDescription() << std::endl;
-        //     // eventsList.push_back(std::make_unique<MonsterEvent>(std::move(monster)));
-        //     eventsList.push_back(std::move(a));
-        //     //auto event = factory.createEvent();
-        // }
-        // else {
-        //     throw std::invalid_argument("Invalid Event File");
-        // }
-
-        eventsList.push_back(factory.createShulaEvent(line));
+        }
+        else {
+            throw std::invalid_argument("Invalid Event File");
+        }
     }
 
     if(eventsList.size() < 2 ){
@@ -165,7 +145,7 @@ void MatamStory::readPlayersFile(std::istream& playersStream)
         std::shared_ptr<JobFactory> jobFactory = nullptr;
         std::shared_ptr<CharacterFactory> characterFactory = nullptr;
 
-        if(!job.compare("Warrior") || !job.compare("Magician") || !job.compare("Archer")) {
+        if(!job.compare(WARRIOR) || !job.compare(MAGICIAN) || !job.compare(ARCHER)) {
 
             jobFactory = createJobFactory(job);
 
@@ -176,7 +156,7 @@ void MatamStory::readPlayersFile(std::istream& playersStream)
 
         character = extractNextWord(line);
 
-        if(!character.compare("Responsible") || !character.compare("RiskTaking")) {
+        if(!character.compare(RESPONSIBLE) || !character.compare(RISK_TAKING)) {
 
             characterFactory = createCharacterFactory(character);
 
@@ -184,7 +164,7 @@ void MatamStory::readPlayersFile(std::istream& playersStream)
         else {
             throw std::invalid_argument("Invalid Players File");
         }
-        Player player(name, DEFAULT_LEVEL, DEFAULT_COINS, DEFAULT_HEALTH_POINTS, jobFactory, characterFactory);
+        Player player(name, jobFactory, characterFactory);
         playersList.push_back(player);
     }
 
@@ -202,12 +182,7 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream)
 void MatamStory::playTurn(Player& player) {
     if (eventsList.empty()) return;
 
-    auto& event = eventsList[m_turnIndex % eventsList.size()];
-
-     if (!event) {
-        std::cout << "Error: event is null." << std::endl;
-        
-    }
+    auto& event = eventsList[(m_turnIndex - 1) % eventsList.size()];
 
     printTurnDetails(m_turnIndex, player, *event);
 
@@ -230,10 +205,9 @@ void MatamStory::playRound() {
     printRoundEnd();
     printLeaderBoardMessage();
 
-    auto sortedPlayers = sortPlayersByScore(std::move(playersList));
+    auto sortedPlayers = sortPlayersByScore();
     unsigned int index = 1;
     for (const auto& player : sortedPlayers) {
-    // for (const auto& player : playersList) {
         printLeaderBoardEntry(index, *player);
         ++index;
     }
@@ -278,10 +252,9 @@ void MatamStory::play() {
     printGameOver();
 
     bool anyPlayerWinner = false;
-    auto sortedPlayers = sortPlayersByScore(std::move(playersList));
+    auto sortedPlayers = sortPlayersByScore();
 
     for (const auto& player : sortedPlayers) {
-    // for (const auto& player : playersList) {
         if (player->getLevel() >= WINNER_LEVEL) {
             printWinner(*player);
             anyPlayerWinner = true;

@@ -7,7 +7,7 @@
 Archer::Archer(int coins) : Job(DEFAULT_HEALTH_POINTS, coins) {}
 
 string Archer::printJobName() const{
-    return "Archer";
+    return ARCHER;
 }
 
 string Archer::reactToSolarEclipse( Player& player) const {

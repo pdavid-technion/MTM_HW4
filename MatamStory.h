@@ -35,7 +35,7 @@ private:
     std::shared_ptr<JobFactory> createJobFactory(const std::string& jobType);
     std::shared_ptr<CharacterFactory> createCharacterFactory(const std::string& characterType);
     std::unique_ptr<MonsterPack> parseMonsterPack(std::string& line);
-    std::vector<Player*> sortPlayersByScore(std::vector<Player> players); // Updated to take and return std::vector<Player>
+    std::vector<Player*> sortPlayersByScore();
 
 public:
     MatamStory(std::istream& eventsStream, std::istream& playersStream);

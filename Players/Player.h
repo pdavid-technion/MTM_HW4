@@ -25,6 +25,10 @@ public:
             std::shared_ptr<JobFactory> jobFactory = nullptr,
             std::shared_ptr<CharacterFactory> characterFactory = nullptr);
 
+            Player(std::string name,
+            std::shared_ptr<JobFactory> jobFactory = nullptr,
+            std::shared_ptr<CharacterFactory> characterFactory = nullptr);
+
     Player(Player&& other) noexcept;
     Player(const Player& other);
 
@@ -50,5 +54,5 @@ public:
     string reactToSolarEclipse();
     string reactToPotionsMerchant();
     bool isStillPlaying() const;
-    bool operator<(Player const&) const;
+    bool operator>(Player const&) const;
 };
