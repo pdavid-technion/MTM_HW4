@@ -4,7 +4,6 @@
 #include "Character.h"
 #include <string>
 #include <PlayerConsts.h>
-#include <iostream>
 
 Player::Player(std::string name,
                int level,

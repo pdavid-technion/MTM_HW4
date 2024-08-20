@@ -2,7 +2,6 @@
 #include <Player.h>
 #include <../Events/Monster.h>
 #include <Utilities.h>
-#include <iostream>
 
 Job::Job(int maxHealthPoints, int coins) :maxHealthPoints(maxHealthPoints), coins(coins){}
 

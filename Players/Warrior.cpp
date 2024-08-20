@@ -3,7 +3,6 @@
 #include "../Events/Monster.h"
 #include "../Utilities.h"
 #include "Warrior.h"
-#include <iostream>
 #include "PlayerConsts.h"
 
 Warrior::Warrior(int maxHealthPoints) : Job(maxHealthPoints,DEFAULT_COINS) {}

@@ -1,6 +1,5 @@
 #include "Snail.h"
 #include "../Players/PlayerConsts.h"
-#include <iostream>
 
     Snail::Snail(
             int combatPower,

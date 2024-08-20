@@ -1,7 +1,6 @@
 #include "../Players/Player.h"
 #include "MonsterEvent.h"
 #include <string>
-#include <iostream>
 #include "Snail.h"
 #include "Slime.h"
 #include "Balrog.h"
