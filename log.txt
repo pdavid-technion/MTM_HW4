@@ -1,0 +1,880 @@
+*   commit 162eaefa9c50d69f6e5fe0c3965d64b0400acdfd
+|\  Merge: 7136423 1d7bf5a
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Tue Aug 20 23:20:59 2024 +0300
+| | 
+| |     Merge pull request #4 from pdavid-technion/shelly/integrate
+| |     
+| |     Shelly/integrate
+| | 
+| * commit 1d7bf5a1b798b6063a2a8a38b93f548b880bfa95
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Tue Aug 20 23:19:46 2024 +0300
+| | 
+| |     remove unnecessary files and add dry.pdf
+| | 
+| |  Events/MonsterEvent.cpp    |   1 -
+| |  Events/PotionsMerchant.cpp |   1 -
+| |  Events/Snail.cpp           |   1 -
+| |  Events/SolarEclipse.cpp    |   1 -
+| |  MatamStory                 | Bin 430072 -> 429464 bytes
+| |  MatamStoryTest             | Bin 1876920 -> 1870688 bytes
+| |  Players/Job.cpp            |   1 -
+| |  Players/Player.cpp         |   1 -
+| |  Players/Warrior.cpp        |   1 -
+| |  dry.pdf                    | Bin 0 -> 271046 bytes
+| |  10 files changed, 7 deletions(-)
+| | 
+| * commit 68f7b0dd4c8e2e9b282263a44707785737ddd156
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Tue Aug 20 23:15:47 2024 +0300
+| | 
+| |     fix negative force and coins
+| | 
+| |  Events/EventFactory.h           |  12 -----
+| |  Events/PotionsMerchantFactory.h |  13 -----
+| |  Events/SolarEclipseFactory.h    |  13 -----
+| |  MatamStory                      | Bin 430128 -> 430072 bytes
+| |  MatamStory.cpp                  |  95 +++++++-----------------------------
+| |  MatamStoryTest                  | Bin 1876312 -> 1876920 bytes
+| |  Players/Job.cpp                 |   7 ++-
+| |  Players/Player.cpp              |  17 +++++--
+| |  Players/Player.h                |   4 +-
+| |  Players/RiskTaking.cpp          |   4 +-
+| |  Players/Warrior.cpp             |   6 ++-
+| |  test_results.html               |  42 ++++++++++------
+| |  12 files changed, 70 insertions(+), 143 deletions(-)
+| | 
+| * commit e124a1689f4ece58c98e79d110fdba08c2459a08
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Tue Aug 20 22:37:41 2024 +0300
+| | 
+| |     handle ercursive packs in one line
+| | 
+| |  .gitmodules                     |   6 +
+| |  Events/EventFactory.h           |  18 +-
+| |  Events/PotionsMerchantFactory.h |  22 +-
+| |  Events/SolarEclipseFactory.h    |  22 +-
+| |  MatamGenericTester              |   1 +
+| |  MatamStory                      | Bin 427552 -> 430128 bytes
+| |  MatamStory.cpp                  | 146 +++++++--
+| |  MatamStory.h                    |   2 +-
+| |  MatamStoryTest                  | Bin 0 -> 1876312 bytes
+| |  Players/PlayerConsts.h          |   2 +-
+| |  TechnionMatam                   |   1 +
+| |  UML.pptx                        | Bin 49278 -> 48844 bytes
+| |  add-testing-tools.sh            |   2 +
+| |  test_results.html               | 634 ++++++++++++++++++++++++++++++++++++
+| |  14 files changed, 791 insertions(+), 65 deletions(-)
+| | 
+| * commit 195ec06158d498cf50249c405396919838dd7d96
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Tue Aug 20 21:24:27 2024 +0300
+| | 
+| |     format and more consts
+| | 
+| |  Events/Balrog.cpp           |   2 +-
+| |  Events/MonsterEvent.cpp     |  30 ++++++------------
+| |  Events/MonsterEvent.h       |   1 -
+| |  Events/MonsterPackFactory.h |   3 +-
+| |  Events/SingleMonster.cpp    |  18 +++++------
+| |  MatamStory                  | Bin 426688 -> 427552 bytes
+| |  MatamStory.cpp              |  21 ++++++++-----
+| |  Players/Player.cpp          |  67 ++++++++++++++--------------------------
+| |  Players/PlayerConsts.h      |   3 ++
+| |  9 files changed, 60 insertions(+), 85 deletions(-)
+| | 
+| * commit 422a1c9d2d619ca1df7159740ce3dfb4c870a808
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Tue Aug 20 21:13:47 2024 +0300
+| | 
+| |     consts and remove redundant stuff
+| | 
+| |  Events/Balrog.cpp            |   2 +-
+| |  Events/MonsterEvent.cpp      |  68 ++++++++---------
+| |  Events/MonsterEvent.h        |   4 +-
+| |  Events/MonsterEventFactory.h | 159 ---------------------------------------
+| |  Events/MonsterPack.h         |   2 +-
+| |  Events/PotionsMerchant.cpp   |   4 +-
+| |  Events/Slime.cpp             |   2 +-
+| |  Events/Snail.cpp             |  11 +--
+| |  Events/SolarEclipse.cpp      |   4 +-
+| |  MatamStory                   | Bin 413528 -> 426688 bytes
+| |  MatamStory.cpp               |  95 +++++++++--------------
+| |  MatamStory.h                 |   2 +-
+| |  Players/Archer.cpp           |   2 +-
+| |  Players/Magician.cpp         |   3 +-
+| |  Players/Player.cpp           | 128 ++++++++++++++++++++-----------
+| |  Players/Player.h             |   6 +-
+| |  Players/PlayerConsts.h       |  20 ++++-
+| |  Players/Responsible.cpp      |   2 +-
+| |  Players/RiskTaking.cpp       |   2 +-
+| |  Players/Warrior.cpp          |   3 +-
+| |  test1.out                    | 100 +++++++++++++++++++++++-
+| |  test1.outA                   |  96 +++++++++++++++++++++++
+| |  22 files changed, 388 insertions(+), 327 deletions(-)
+| | 
+| * commit 7f3295efecdcec1530bd6ab6ec1af4cf997d7b81
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Tue Aug 20 01:43:53 2024 +0300
+| | 
+| |     try to fix but dont succeed
+| | 
+| |  .vscode/settings.json                  |  57 ++++++++
+| |  Events/Balrog.cpp                      |  42 ++++++
+| |  Events/Balrog.h                        |  39 ++----
+| |  Events/Monster.h                       |   8 +-
+| |  Events/MonsterEvent.cpp                |  38 +++++-
+| |  Events/MonsterEvent.h                  |   4 +-
+| |  Events/MonsterEventFactory.h           | 155 +++++++++++++++++++++-
+| |  Events/PotionsMerchant.cpp             |   2 +
+| |  Events/SingleMonster.cpp               |  28 ++++
+| |  Events/SingleMonster.h                 |  27 ++--
+| |  Events/Slime.cpp                       |  39 ++++++
+| |  Events/Slime.h                         |  36 ++----
+| |  Events/Snail.cpp                       |  45 +++++++
+| |  Events/Snail.h                         |  35 ++---
+| |  Events/SolarEclipse.cpp                |   2 +
+| |  MatamStory                             | Bin 378440 -> 413528 bytes
+| |  MatamStory.cpp                         | 200 +++++++++++++++++++++--------
+| |  MatamStory.h                           |   4 +-
+| |  Players/Archer.cpp                     |   2 +-
+| |  Players/Job.h                          |   2 +-
+| |  Players/Player.cpp                     |   7 +-
+| |  Players/Player.h                       |   6 +-
+| |  GameConsts.h => Players/PlayerConsts.h |   0
+| |  Players/Responsible.cpp                |   2 +-
+| |  Players/RiskTaking.cpp                 |   2 +-
+| |  test1.out                              |   4 +
+| |  26 files changed, 600 insertions(+), 186 deletions(-)
+| | 
+| * commit 0add3c47d1d6e76d911c58f09020b2899732f7c7
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Mon Aug 19 11:54:58 2024 +0300
+| | 
+| |     fix folder structure and add consts
+| | 
+| |  Events/Balrog.h                                 |   7 +-
+| |  Events/{Factories => }/BalrogFactory.h          |   4 +-
+| |  Events/Event.h                                  |   2 +-
+| |  Events/{Factories => }/EventFactory.h           |   2 +-
+| |  Events/MonsterEvent.cpp                         |   1 -
+| |  Events/MonsterEvent.h                           |   2 +
+| |  Events/{Factories => }/MonsterEventFactory.h    |   4 +-
+| |  Events/{Factories => }/MonsterFactory.h         |   0
+| |  Events/{Factories => }/MonsterPackFactory.h     |   0
+| |  Events/{Factories => }/PotionsMerchantFactory.h |   4 +-
+| |  Events/{Factories => }/SingleMonsterFactory.h   |   2 +-
+| |  Events/Slime.h                                  |   5 +-
+| |  Events/{Factories => }/SlimeFactory.h           |   4 +-
+| |  Events/Snail.h                                  |   5 +-
+| |  Events/{Factories => }/SnailFactory.h           |   4 +-
+| |  Events/{Factories => }/SolarEclipseFactory.h    |   4 +-
+| |  GameConsts.h                                    |  39 +++
+| |  MatamStory                                      | Bin 0 -> 378440 bytes
+| |  MatamStory.cpp                                  | 370 +++-----------------
+| |  MatamStory.h                                    |  93 +----
+| |  Players/{Job => }/Archer.cpp                    |  13 +-
+| |  Players/{Job => }/Archer.h                      |   9 +-
+| |  Players/{Factories => }/ArcherFactory.h         |   4 +-
+| |  Players/Character.h                             |  12 +
+| |  Players/Character/Character.h                   |  25 --
+| |  Players/Character/Responsible.cpp               |  16 -
+| |  Players/Character/RiskTaking.cpp                |  16 -
+| |  Players/{Factories => }/CharacterFactory.h      |   0
+| |  Players/{Job => }/Job.cpp                       |   0
+| |  Players/{Job => }/Job.h                         |   8 +-
+| |  Players/{Factories => }/JobFactory.h            |   0
+| |  Players/{Job => }/Magician.cpp                  |  11 +-
+| |  Players/{Job => }/Magician.h                    |   7 +-
+| |  Players/{Factories => }/MagicianFactory.h       |   4 +-
+| |  Players/Player.cpp                              | 165 +++------
+| |  Players/Player.h                                | 123 +------
+| |  Players/Responsible.cpp                         |  23 ++
+| |  Players/Responsible.h                           |  13 +
+| |  Players/{Factories => }/ResponsibleFactory.h    |   2 +-
+| |  Players/RiskTaking.cpp                          |  21 ++
+| |  Players/RiskTaking.h                            |  13 +
+| |  Players/{Factories => }/RiskTakingFactory.h     |   2 +-
+| |  Players/{Job => }/Warrior.cpp                   |  11 +-
+| |  Players/{Job => }/Warrior.h                     |   9 +-
+| |  Players/{Factories => }/WarriorFactory.h        |   6 +-
+| |  45 files changed, 327 insertions(+), 738 deletions(-)
+| | 
+| * commit 5dd1609cf55e907a5dcab7227207860fd836902d
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Mon Aug 19 00:11:09 2024 +0300
+| | 
+| |     try something pls god
+| | 
+| |  Events/Balrog.h                           |  28 +-
+| |  Events/Event.cpp                          |  26 +-
+| |  Events/Event.h                            |  26 +-
+| |  Events/Factories/BalrogFactory.h          |   6 +-
+| |  Events/Factories/EventFactory.h           |   4 +-
+| |  Events/Factories/MonsterEventFactory.h    |  13 +-
+| |  Events/Factories/MonsterFactory.h         |   2 +-
+| |  Events/Factories/MonsterPackFactory.h     |   8 +-
+| |  Events/Factories/PotionsMerchantFactory.h |   9 +-
+| |  Events/Factories/SingleMonsterFactory.h   |   4 +-
+| |  Events/Factories/SlimeFactory.h           |   6 +-
+| |  Events/Factories/SnailFactory.h           |   6 +-
+| |  Events/Factories/SolarEclipseFactory.h    |   9 +-
+| |  Events/Monster.h                          |   7 +-
+| |  Events/MonsterEvent.cpp                   |  21 +
+| |  Events/MonsterEvent.h                     |  18 +
+| |  Events/MonsterPack.h                      |  11 +-
+| |  Events/PotionsMerchant.cpp                |  12 +
+| |  Events/PotionsMerchant.h                  |  14 +
+| |  Events/SingleMonster.h                    |   3 +-
+| |  Events/Slime.h                            |  31 +-
+| |  Events/Snail.h                            |  30 +-
+| |  Events/SolarEclipse.cpp                   |  13 +
+| |  Events/SolarEclipse.h                     |  14 +
+| |  MatamStory.cpp                            | 563 +++++++++++++++++---------
+| |  MatamStory.h                              | 132 ++++--
+| |  Players/Character/Character.cpp           |   0
+| |  Players/Character/Character.h             |   7 +-
+| |  Players/Character/Responsible.cpp         |   6 +-
+| |  Players/Character/RiskTaking.cpp          |   6 +-
+| |  Players/Factories/ArcherFactory.h         |  12 +-
+| |  Players/Factories/MagicianFactory.h       |   6 +-
+| |  Players/Factories/ResponsibleFactory.h    |   5 +-
+| |  Players/Factories/RiskTakingFactory.h     |   5 +-
+| |  Players/Factories/WarriorFactory.h        |   6 +-
+| |  Players/Job/Archer.cpp                    |  30 +-
+| |  Players/Job/Archer.h                      |  12 +-
+| |  Players/Job/Job.cpp                       |   2 +-
+| |  Players/Job/Job.h                         |   8 +-
+| |  Players/Job/Magician.cpp                  |  23 +-
+| |  Players/Job/Magician.h                    |  11 +-
+| |  Players/Job/Warrior.cpp                   |  15 +-
+| |  Players/Job/Warrior.h                     |  10 +-
+| |  Players/Player.cpp                        | 215 +++++++---
+| |  Players/Player.h                          | 170 +++++---
+| |  45 files changed, 1082 insertions(+), 483 deletions(-)
+| | 
+| * commit 604079cd392249899d19a25e9980f24a571bd591
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 20:34:45 2024 +0300
+| | 
+| |     fix jobs structure
+| | 
+| |  Players/Job/Archer.cpp   |  4 ++++
+| |  Players/Job/Archer.h     | 11 +++++++++++
+| |  Players/Job/Job.h        | 20 +-------------------
+| |  Players/Job/Magician.cpp |  2 ++
+| |  Players/Job/Magician.h   | 12 ++++++++++++
+| |  Players/Job/Warrior.cpp  |  5 ++++-
+| |  Players/Job/Warrior.h    | 13 +++++++++++++
+| |  7 files changed, 47 insertions(+), 20 deletions(-)
+| | 
+| * commit eda215765f4c77e0074df44a85a62afc0845cfb8
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 19:46:22 2024 +0300
+| | 
+| |     deattach the sort form player list
+| | 
+| |  MatamStory.cpp | 14 +++++++++-----
+| |  1 file changed, 9 insertions(+), 5 deletions(-)
+| | 
+| * commit 732a39778fa7c75d090d6399e4b11bbb6b4a779e
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 19:43:07 2024 +0300
+| | 
+| |     add player plays only if their alive
+| | 
+| |  MatamStory.cpp     | 5 ++++-
+| |  Players/Player.cpp | 4 ++++
+| |  Players/Player.h   | 2 ++
+| |  3 files changed, 10 insertions(+), 1 deletion(-)
+| | 
+| * commit 6b0b9f6db79ab671208e3ad40da7f5d291ffbe32
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 19:38:01 2024 +0300
+| | 
+| |     add monster get description
+| | 
+| |  Events/MonsterPack.h | 9 ++++++++-
+| |  1 file changed, 8 insertions(+), 1 deletion(-)
+| | 
+| * commit a4246f43bfb0b4005be6f6148acb2a325512be11
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 19:33:16 2024 +0300
+| | 
+| |     add event getDescription
+| | 
+| |  Events/Balrog.h  |  6 ++++++
+| |  Events/Event.cpp | 19 ++++++++++++++-----
+| |  Events/Event.h   |  9 ++++++---
+| |  Events/Monster.h |  1 +
+| |  Events/Slime.h   |  6 ++++++
+| |  Events/Snail.h   |  5 +++++
+| |  6 files changed, 38 insertions(+), 8 deletions(-)
+| | 
+| * commit 9ae2edd3ff61a1dfdbd45b424968f382d35c5506
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 19:11:50 2024 +0300
+| | 
+| |     fix player order and implement play
+| | 
+| |  MatamStory.cpp     | 34 +++++++++++++++++++++++++++++++---
+| |  Players/Player.cpp | 12 ++++++++++++
+| |  Players/Player.h   |  2 ++
+| |  3 files changed, 45 insertions(+), 3 deletions(-)
+| | 
+| * commit 831f13ecdea2a82110ae331bdd8062a047932a2c
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 18:57:09 2024 +0300
+| | 
+| |     finish is Game over
+| | 
+| |  MatamStory.cpp | 19 ++++++++++++++++---
+| |  1 file changed, 16 insertions(+), 3 deletions(-)
+| | 
+| * commit b762b9ff7784b02cbb6719b4284c979019703701
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 18:53:07 2024 +0300
+| | 
+| |     finish play round
+| | 
+| |  MatamStory.cpp | 14 ++++++++++----
+| |  MatamStory.h   |  2 +-
+| |  2 files changed, 11 insertions(+), 5 deletions(-)
+| | 
+| * commit f73fa8da33533f9761ce5a39ac519bcd2e424207
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 18:46:32 2024 +0300
+| | 
+| |     finish playTurn func
+| | 
+| |  Events/Event.cpp                  | 13 +++++++------
+| |  Events/Event.h                    |  8 ++++----
+| |  MatamStory.cpp                    | 19 +++++++++++++++++--
+| |  Players/Character/Character.h     |  6 +++---
+| |  Players/Character/Responsible.cpp |  4 +++-
+| |  Players/Character/RiskTaking.cpp  |  7 +++++--
+| |  Players/Job/Job.cpp               | 10 +++++++---
+| |  Players/Job/Job.h                 |  8 ++++----
+| |  Players/Job/Magician.cpp          |  4 +++-
+| |  Players/Job/Warrior.cpp           |  5 ++++-
+| |  Players/Player.cpp                | 10 +++++-----
+| |  Players/Player.h                  |  6 +++---
+| |  12 files changed, 65 insertions(+), 35 deletions(-)
+| | 
+| * commit fcceb4163424bc53d2156ae69b5037af75211c77
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 18:23:58 2024 +0300
+| | 
+| |     fix recursive pack creation
+| | 
+| |  MatamStory.cpp | 68 ++++++++++++++++--------------------------------------
+| |  MatamStory.h   |  4 +---
+| |  2 files changed, 21 insertions(+), 51 deletions(-)
+| | 
+| * commit a85d8abd1107d352579c8dc058fed1c816e4eb47
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 18:02:43 2024 +0300
+| | 
+| |     fix player constructor
+| | 
+| |  MatamStory.cpp                         | 132 +++++++++++++++++++----------
+| |  MatamStory.h                           |   2 +
+| |  Players/Factories/ArcherFactory.h      |   2 +-
+| |  Players/Factories/JobFactory.h         |   1 +
+| |  Players/Factories/MagicianFactory.h    |   2 +-
+| |  Players/Factories/ResponsibleFactory.h |   2 +-
+| |  Players/Factories/RiskTakingFactory.h  |   2 +-
+| |  Players/Factories/WarriorFactory.h     |   2 +-
+| |  Players/{Job => }/Player.cpp           |   4 +-
+| |  9 files changed, 98 insertions(+), 51 deletions(-)
+| | 
+| * commit 6e4e1a524209884b53c116225a9c05271785408c
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 17:42:13 2024 +0300
+| | 
+| |     a bunch of fixes
+| | 
+| |  Events/Balrog.h                       | 11 +++++++++++
+| |  Events/Event.cpp                      |  1 +
+| |  Events/Factories/BalrogFactory.h      |  4 ++--
+| |  Events/Factories/MonsterPackFactory.h |  1 +
+| |  Events/Factories/SlimeFactory.h       |  4 ++--
+| |  Events/Factories/SnailFactory.h       |  4 ++--
+| |  Events/Monster.h                      |  1 +
+| |  Events/MonsterPack.h                  |  7 +++++++
+| |  Events/SingleMonster.h                |  4 ++++
+| |  Events/Slime.h                        |  6 ++++++
+| |  Events/Snail.h                        |  6 ++++++
+| |  MatamStory.cpp                        | 20 ++++++++++++++++----
+| |  12 files changed, 59 insertions(+), 10 deletions(-)
+| | 
+* | commit 71364231557767608f6dae27bba19bed96aa2478
+|\| Merge: db64712 8099e32
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sun Aug 18 09:40:23 2024 +0300
+| | 
+| |     Merge pull request #3 from pdavid-technion/shelly/integrate
+| |     
+| |     Shelly/integrate
+| | 
+| * commit 8099e32c775a76b1842c316cf26bf763b74a44f0
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 19:02:10 2024 +0300
+| | 
+| |     fix matamstory
+| | 
+| |  Events/Factories/BalrogFactory.h        |  1 +
+| |  Events/Factories/MonsterFactory.h       |  1 +
+| |  Events/Factories/SingleMonsterFactory.h |  2 ++
+| |  Events/Factories/SlimeFactory.h         |  1 +
+| |  Events/Factories/SnailFactory.h         |  1 +
+| |  MatamStory.cpp                          | 47 ++++++++++++++++++++---------
+| |  6 files changed, 38 insertions(+), 15 deletions(-)
+| | 
+| * commit 3afa6a78ce45f9a76937507252bdc04524b9da0d
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 17:49:32 2024 +0300
+| | 
+| |     r4esolve merge conflicts
+| | 
+| |  Players/Archer.cpp                                   |  3 ---
+| |  Players/Character/Character.cpp                      |  0
+| |  Players/{ => Character}/Character.h                  |  4 +++-
+| |  Players/{Character.cpp => Character/Responsible.cpp} |  7 +++----
+| |  Players/Character/RiskTaking.cpp                     | 13 +++++++++++++
+| |  Players/Job/Archer.cpp                               |  8 ++++++++
+| |  Players/{ => Job}/Job.cpp                            |  0
+| |  Players/{ => Job}/Job.h                              |  4 ++++
+| |  Players/{ => Job}/Magician.cpp                       |  5 +++++
+| |  Players/{ => Job}/Player.cpp                         |  7 ++++---
+| |  Players/{ => Job}/Warrior.cpp                        |  8 +++++++-
+| |  Players/Player.h                                     |  1 +
+| |  12 files changed, 48 insertions(+), 12 deletions(-)
+| | 
+| * commit a972aa39c7a54080e85df97d8c125993ce2244db
+|/| Merge: db64712 eaeb5f7
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 17:49:13 2024 +0300
+| | 
+| |     Merge branch 'david' of https://github.com/pdavid-technion/MTM_HW4 into shelly/integrate
+| |   
+* |   commit db6471239c23d767fedbc020959abc5a7226cd0b
+|\ \  Merge: 9a09e1e abd692f
+| | | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | | Date:   Sat Aug 17 17:27:36 2024 +0300
+| | | 
+| | |     Merge pull request #2 from pdavid-technion/shelly/bootstrap
+| | |     
+| | |     add exceptions
+| | |   
+* | |   commit 9a09e1ed052a1fa37044d0387e07eb35818a51ed
+|\ \ \  Merge: ba0b345 1040024
+| | | | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | | | Date:   Sat Aug 17 17:25:59 2024 +0300
+| | | | 
+| | | |     Merge pull request #1 from pdavid-technion/shelly/bootstrap
+| | | |     
+| | | |     Shelly/bootstrap
+| | | |   
+| | | | * commit b461d3edc100c21efc2e91538e8f92cc285c9494
+| | | | | Author: pdavid-technion <pdavid@campus.technion.ac.il>
+| | | | | Date:   Mon Aug 19 17:49:12 2024 +0300
+| | | | | 
+| | | | |     .
+| | | | | 
+| | | | |  Events/Balrog.h                              |  35 +-
+| | | | |  Events/{Factories => }/BalrogFactory.h       |   4 +-
+| | | | |  Events/Event.cpp                             |  26 +-
+| | | | |  Events/Event.h                               |  28 +-
+| | | | |  Events/{Factories => }/EventFactory.h        |   4 +-
+| | | | |  Events/Factories/MonsterEventFactory.h       |  17 -
+| | | | |  Events/Factories/PotionsMerchantFactory.h    |  12 -
+| | | | |  Events/Factories/SolarEclipseFactory.h       |  12 -
+| | | | |  Events/Monster.h                             |   7 +-
+| | | | |  Events/MonsterEvent.cpp                      |  20 +
+| | | | |  Events/MonsterEvent.h                        |  20 +
+| | | | |  Events/MonsterEventFactory.h                 |  18 +
+| | | | |  Events/{Factories => }/MonsterFactory.h      |   2 +-
+| | | | |  Events/MonsterPack.h                         |  11 +-
+| | | | |  Events/{Factories => }/MonsterPackFactory.h  |   8 +-
+| | | | |  Events/PotionsMerchant.cpp                   |  12 +
+| | | | |  Events/PotionsMerchant.h                     |  14 +
+| | | | |  Events/PotionsMerchantFactory.h              |  13 +
+| | | | |  Events/SingleMonster.h                       |   3 +-
+| | | | |  .../{Factories => }/SingleMonsterFactory.h   |   4 +-
+| | | | |  Events/Slime.h                               |  36 +-
+| | | | |  Events/{Factories => }/SlimeFactory.h        |   4 +-
+| | | | |  Events/Snail.h                               |  35 +-
+| | | | |  Events/{Factories => }/SnailFactory.h        |   4 +-
+| | | | |  Events/SolarEclipse.cpp                      |  13 +
+| | | | |  Events/SolarEclipse.h                        |  14 +
+| | | | |  Events/SolarEclipseFactory.h                 |  13 +
+| | | | |  GameConsts.h                                 |  39 ++
+| | | | |  MatamStory                                   | Bin 0 -> 380472 bytes
+| | | | |  MatamStory.cpp                               | 341 ++++++++---------
+| | | | |  MatamStory.h                                 |  76 ++--
+| | | | |  Players/Archer.cpp                           |  35 ++
+| | | | |  Players/Archer.h                             |  16 +
+| | | | |  Players/ArcherFactory.h                      |  14 +
+| | | | |  Players/Character.h                          |  12 +
+| | | | |  Players/Character/Character.cpp              |   0
+| | | | |  Players/Character/Character.h                |  22 --
+| | | | |  Players/Character/Responsible.cpp            |  16 -
+| | | | |  Players/Character/RiskTaking.cpp             |  16 -
+| | | | |  Players/{Factories => }/CharacterFactory.h   |   0
+| | | | |  Players/Factories/ArcherFactory.h            |  12 -
+| | | | |  Players/{Job => }/Job.cpp                    |   2 +-
+| | | | |  Players/Job.h                                |  23 ++
+| | | | |  Players/Job/Archer.cpp                       |   8 -
+| | | | |  Players/Job/Job.h                            |  39 --
+| | | | |  Players/Job/Magician.cpp                     |  14 -
+| | | | |  Players/{Factories => }/JobFactory.h         |   0
+| | | | |  Players/Magician.cpp                         |  34 ++
+| | | | |  Players/Magician.h                           |  16 +
+| | | | |  Players/{Factories => }/MagicianFactory.h    |   6 +-
+| | | | |  Players/Player.cpp                           | 144 ++++---
+| | | | |  Players/Player.h                             |  89 ++---
+| | | | |  Players/Responsible.cpp                      |  23 ++
+| | | | |  Players/Responsible.h                        |  13 +
+| | | | |  Players/{Factories => }/ResponsibleFactory.h |   5 +-
+| | | | |  Players/RiskTaking.cpp                       |  21 +
+| | | | |  Players/RiskTaking.h                         |  13 +
+| | | | |  Players/{Factories => }/RiskTakingFactory.h  |   5 +-
+| | | | |  Players/{Job => }/Warrior.cpp                |  23 +-
+| | | | |  Players/Warrior.h                            |  16 +
+| | | | |  Players/{Factories => }/WarriorFactory.h     |   6 +-
+| | | | |  61 files changed, 872 insertions(+), 616 deletions(-)
+| | | | | 
+| | | | * commit 781590703367701d5bbc4f83fc14f61ca55cc72e
+| | | | | Author: pdavid-technion <pdavid@campus.technion.ac.il>
+| | | | | Date:   Sun Aug 18 20:54:11 2024 +0300
+| | | | | 
+| | | | |     .
+| | | | | 
+| | | | |  MatamStory.cpp | 15 +++++++++++----
+| | | | |  1 file changed, 11 insertions(+), 4 deletions(-)
+| | | | | 
+| | | | * commit d09de7aa30698e676c296ab2ac0daf8bb84de69b
+| | | |/  Author: pdavid-technion <pdavid@campus.technion.ac.il>
+| | | |   Date:   Sun Aug 18 20:35:17 2024 +0300
+| | | |   
+| | | |       .
+| | | |   
+| | | |    Events/Balrog.h                              |  17 ++
+| | | |    Events/Event.cpp                             |  34 ++-
+| | | |    Events/Event.h                               |  13 +-
+| | | |    Events/Factories/BalrogFactory.h             |   5 +-
+| | | |    ...ventFactory.h\357\200\272Zone.Identifier" |   2 +
+| | | |    ...ventFactory.h\357\200\272Zone.Identifier" |   2 +
+| | | |    Events/Factories/MonsterFactory.h            |   1 +
+| | | |    Events/Factories/MonsterPackFactory.h        |   1 +
+| | | |    ...hantFactory.h\357\200\272Zone.Identifier" |   2 +
+| | | |    Events/Factories/SingleMonsterFactory.h      |   6 +-
+| | | |    Events/Factories/SlimeFactory.h              |   5 +-
+| | | |    Events/Factories/SnailFactory.h              |   5 +-
+| | | |    ...ipseFactory.h\357\200\272Zone.Identifier" |   2 +
+| | | |    Events/Monster.h                             |   2 +
+| | | |    Events/MonsterPack.h                         |  14 +
+| | | |    Events/SingleMonster.h                       |   4 +
+| | | |    Events/Slime.h                               |  12 +
+| | | |    Events/Snail.h                               |  11 +
+| | | |    MatamStory.cpp                               | 264 ++++++++++++-----
+| | | |    MatamStory.h                                 |   8 +-
+| | | |    Players/Character.h                          |  26 --
+| | | |    Players/Character/Character.cpp              |   0
+| | | |    Players/Character/Character.h                |  22 ++
+| | | |    Players/Character/Responsible.cpp            |  16 +
+| | | |    Players/Character/RiskTaking.cpp             |  16 +
+| | | |    Players/Factories/ArcherFactory.h            |   2 +-
+| | | |    ...cterFactory.h\357\200\272Zone.Identifier" |   2 +
+| | | |    Players/Factories/JobFactory.h               |   1 +
+| | | |    Players/Factories/MagicianFactory.h          |   2 +-
+| | | |    Players/Factories/ResponsibleFactory.h       |   2 +-
+| | | |    Players/Factories/RiskTakingFactory.h        |   2 +-
+| | | |    Players/Factories/WarriorFactory.h           |   2 +-
+| | | |    Players/Job.h                                |  31 --
+| | | |    Players/Job/Archer.cpp                       |   8 +
+| | | |    Players/Job/Job.cpp                          |  38 +++
+| | | |    Players/Job/Job.h                            |  39 +++
+| | | |    Players/Job/Magician.cpp                     |  14 +
+| | | |    Players/Job/Warrior.cpp                      |  27 ++
+| | | |    Players/Player.cpp                           | 140 ++++++---
+| | | |    Players/Player.h                             |  42 ++-
+| | | |    .../test1.events\357\200\272Zone.Identifier" |   2 +
+| | | |    ...est1.expected\357\200\272Zone.Identifier" |   2 +
+| | | |    ...test1.players\357\200\272Zone.Identifier" |   2 +
+| | | |    .../test2.events\357\200\272Zone.Identifier" |   2 +
+| | | |    ...est2.expected\357\200\272Zone.Identifier" |   2 +
+| | | |    ...test2.players\357\200\272Zone.Identifier" |   2 +
+| | | |    .../test3.events\357\200\272Zone.Identifier" |   2 +
+| | | |    ...est3.expected\357\200\272Zone.Identifier" |   2 +
+| | | |    ...test3.players\357\200\272Zone.Identifier" |   2 +
+| | | |    49 files changed, 650 insertions(+), 210 deletions(-)
+| | | | 
+| | | * commit eaeb5f742aa929b010b5939f6ddc746e68d1460c
+| | | | Author: pdavid-technion <pdavid@campus.technion.ac.il>
+| | | | Date:   Sat Aug 17 11:30:53 2024 +0300
+| | | | 
+| | | |     .
+| | | | 
+| | | |  Players/Factories/WarriorFactory.h | 2 +-
+| | | |  Players/Player.cpp                 | 2 +-
+| | | |  2 files changed, 2 insertions(+), 2 deletions(-)
+| | | | 
+| | | * commit 27a54485a4f50151260b61acb950b93dced9ee5c
+| | | | Author: pdavid-technion <pdavid@campus.technion.ac.il>
+| | | | Date:   Sat Aug 17 11:27:55 2024 +0300
+| | | | 
+| | | |     .
+| | | | 
+| | | |  Events/Factories/EventFactory.h           | 11 ++++++++++-
+| | | |  Events/Factories/MonsterEventFactory.h    | 17 +++++++++++++++++
+| | | |  Events/Factories/PotionsMerchantFactory.h | 12 ++++++++++++
+| | | |  Events/Factories/SolarEclipseFactory.h    | 12 ++++++++++++
+| | | |  Players/Player.cpp                        |  1 +
+| | | |  5 files changed, 52 insertions(+), 1 deletion(-)
+| | | | 
+| | | * commit 7db8b19f1ad55df44601cf5135f1588f4372bca6
+| | | | Author: pdavid-technion <pdavid@campus.technion.ac.il>
+| | | | Date:   Sat Aug 17 11:23:36 2024 +0300
+| | | | 
+| | | |     .
+| | | | 
+| | | |  Players/Character.h |  7 +++++++
+| | | |  Players/Job.h       | 10 ++++++++++
+| | | |  Players/Player.cpp  |  6 +++++-
+| | | |  3 files changed, 22 insertions(+), 1 deletion(-)
+| | | | 
+| | | * commit 342a25078e0ece63c76b523c7fd7cfae383177d6
+| |_|/  Author: pdavid-technion <pdavid@campus.technion.ac.il>
+|/| |   Date:   Fri Aug 16 20:30:35 2024 +0300
+| | |   
+| | |       .
+| | |   
+| | |    Events/Event.cpp                          |   6 ++
+| | |    Events/Event.h                            |  26 ++++++-
+| | |    Events/Factories/BalrogFactory.h          |  11 +++
+| | |    Events/Factories/EventFactory.h           |   3 +
+| | |    Events/Factories/MonsterEventFactory.h    |   0
+| | |    Events/Factories/MonsterFactory.h         |  12 +++
+| | |    Events/Factories/MonsterPackFactory.h     |  26 +++++++
+| | |    Events/Factories/PotionsMerchantFactory.h |   0
+| | |    Events/Factories/SingleMonsterFactory.h   |   8 ++
+| | |    Events/Factories/SlimeFactory.h           |  11 +++
+| | |    Events/Factories/SnailFactory.h           |  11 +++
+| | |    Events/Factories/SolarEclipseFactory.h    |   0
+| | |    Events/Monster.h                          |  22 ++++++
+| | |    Events/MonsterPack.h                      |  52 +++++++++++++
+| | |    Events/SingleMonster.h                    |  30 ++++++++
+| | |    MatamStory.cpp                            |  88 +++++++++++++++++++++-
+| | |    MatamStory.h                              |  16 +++-
+| | |    Players/Character.h                       |  19 +++++
+| | |    Players/Factories/ArcherFactory.h         |  12 +++
+| | |    Players/Factories/CharacterFactory.h      |  12 +++
+| | |    Players/Factories/JobFactory.h            |  12 +++
+| | |    Players/Factories/MagicianFactory.h       |  12 +++
+| | |    Players/Factories/ResponsibleFactory.h    |  12 +++
+| | |    Players/Factories/RiskTakingFactory.h     |  12 +++
+| | |    Players/Factories/WarriorFactory.h        |  12 +++
+| | |    Players/Job.h                             |  21 ++++++
+| | |    Players/Player.cpp                        |  48 ++++++++++++
+| | |    Players/Player.h                          |  32 ++++++--
+| | |    UML.pptx                                  | Bin 0 -> 49278 bytes
+| | |    29 files changed, 515 insertions(+), 11 deletions(-)
+| | |   
+| | | * commit ca990c3ae08fd2784fe223d8bd587f1a984f70ae
+| | |/| Merge: abd692f a19b68a
+| | | | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | | | Date:   Sat Aug 17 17:28:11 2024 +0300
+| | | | 
+| | | |     On shelly/bootstrap: !!GitHub_Desktop<shelly/bootstrap>
+| | | | 
+| | | * commit a19b68a5cabf3776d771808fb560b5b69d0170c8
+| | |/  Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | |   Date:   Sat Aug 17 17:28:11 2024 +0300
+| | |   
+| | |       index on shelly/bootstrap: abd692f add exceptions
+| | |   
+| | |    .vscode/settings.json | 55 +++++++++++++++++++++++++++++++++++++++++++
+| | |    1 file changed, 55 insertions(+)
+| | | 
+| | * commit abd692f70afff52359f89335cac09b64672e98a5
+| |/  Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| |   Date:   Sat Aug 17 17:27:06 2024 +0300
+| |   
+| |       add exceptions
+| |   
+| |    Events/Monster.h | 1 +
+| |    1 file changed, 1 insertion(+)
+| | 
+| * commit 10400240364f4851e4836c0833a7974f898b869d
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 17:17:27 2024 +0300
+| | 
+| |     handle events
+| | 
+| |  Events/Event.cpp      |  6 +++---
+| |  Players/Character.cpp |  4 ++--
+| |  Players/Character.h   | 13 +++++--------
+| |  Players/Player.cpp    | 13 +++++++++++++
+| |  Players/Player.h      |  6 ++++++
+| |  5 files changed, 29 insertions(+), 13 deletions(-)
+| | 
+| * commit b39b0e92e50c1f71463c75d8e3c4da04ea6ce38f
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 17:09:12 2024 +0300
+| | 
+| |     react to potions merchant
+| | 
+| |  Players/Character.cpp | 11 ++++++++---
+| |  Players/Player.cpp    |  5 +++++
+| |  Players/Player.h      |  2 ++
+| |  3 files changed, 15 insertions(+), 3 deletions(-)
+| | 
+| * commit 46c79c818a22b34d55aedc72fb88eac8166b4b2f
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 17:01:29 2024 +0300
+| | 
+| |     some fixes
+| | 
+| |  Players/Archer.cpp    |  3 +++
+| |  Players/Character.cpp |  5 +++--
+| |  Players/Job.cpp       | 38 ++++++++++++++++----------------------
+| |  Players/Job.h         | 23 ++++++++++++-----------
+| |  Players/Magician.cpp  |  7 +++++++
+| |  Players/Player.cpp    | 14 +++++++-------
+| |  Players/Player.h      |  6 ++----
+| |  Players/Warrior.cpp   | 18 ++++++++++++++++++
+| |  8 files changed, 68 insertions(+), 46 deletions(-)
+| | 
+| * commit 718500d03cd1bc1abf64135e5e6b61a373ce7e2c
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 16:42:06 2024 +0300
+| | 
+| |     react to solar eclipse
+| | 
+| |  Players/Character.cpp | 9 +++++++++
+| |  Players/Character.h   | 6 +++---
+| |  Players/Job.cpp       | 4 ++++
+| |  Players/Job.h         | 6 ++++++
+| |  Players/Player.cpp    | 8 ++++++++
+| |  Players/Player.h      | 4 ++++
+| |  6 files changed, 34 insertions(+), 3 deletions(-)
+| | 
+| * commit 47897bac4b8d558ac2f44ff190d05446e10c9a23
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Sat Aug 17 16:31:12 2024 +0300
+| | 
+| |     add fight monster logic
+| | 
+| |  Events/Event.cpp    | 19 +++++++++++++++++++
+| |  Players/Character.h | 10 +++++++---
+| |  Players/Job.cpp     | 36 ++++++++++++++++++++++++++++++++++++
+| |  Players/Job.h       | 13 ++++++++++---
+| |  Players/Player.cpp  | 20 ++++++++++++++++++++
+| |  Players/Player.h    | 10 ++++++++++
+| |  6 files changed, 102 insertions(+), 6 deletions(-)
+| | 
+| * commit 3e96262096bd751ecb45adb2ce210b9fb3de53a2
+| | Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+| | Date:   Fri Aug 16 19:15:26 2024 +0300
+| | 
+| |     continue with factory implemetation
+| | 
+| |  Events/Factories/EventFactory.h           | 11 ++++++-
+| |  Events/Factories/MonsterEventFactory.h    | 17 +++++++++++
+| |  Events/Factories/PotionsMerchantFactory.h | 13 +++++++++
+| |  Events/Factories/SolarEclipseFactory.h    | 13 +++++++++
+| |  Players/Player.cpp                        | 42 +++++++++++++++++++++++++++
+| |  Players/Player.h                          |  8 ++---
+| |  6 files changed, 99 insertions(+), 5 deletions(-)
+| | 
+| * commit f161179c2be4b51cfd344bfdf1d6a8f7bb8f964e
+|/  Author: ShellyLeron <119409890+ShellyLeron@users.noreply.github.com>
+|   Date:   Wed Aug 14 00:11:25 2024 +0300
+|   
+|       start bootstraping
+|   
+|    Events/Event.h                            |  27 ++++++++++++-
+|    Events/Factories/BalrogFactory.h          |  11 ++++++
+|    Events/Factories/EventFactory.h           |   3 ++
+|    Events/Factories/MonsterEventFactory.h    |   0
+|    Events/Factories/MonsterFactory.h         |  12 ++++++
+|    Events/Factories/MonsterPackFactory.h     |  26 +++++++++++++
+|    Events/Factories/PotionsMerchantFactory.h |   0
+|    Events/Factories/SingleMonsterFactory.h   |   8 ++++
+|    Events/Factories/SlimeFactory.h           |  11 ++++++
+|    Events/Factories/SnailFactory.h           |  11 ++++++
+|    Events/Factories/SolarEclipseFactory.h    |   0
+|    Events/Monster.h                          |  22 +++++++++++
+|    Events/MonsterPack.h                      |  52 ++++++++++++++++++++++++++
+|    Events/SingleMonster.h                    |  30 +++++++++++++++
+|    Players/Character.h                       |  19 ++++++++++
+|    Players/Factories/ArcherFactory.h         |  12 ++++++
+|    Players/Factories/CharacterFactory.h      |  12 ++++++
+|    Players/Factories/JobFactory.h            |  12 ++++++
+|    Players/Factories/MagicianFactory.h       |  12 ++++++
+|    Players/Factories/ResponsibleFactory.h    |  12 ++++++
+|    Players/Factories/RiskTakingFactory.h     |  12 ++++++
+|    Players/Factories/WarriorFactory.h        |  12 ++++++
+|    Players/Job.h                             |  21 +++++++++++
+|    Players/Player.h                          |  43 +++++++++++++++------
+|    UML.pptx                                  | Bin 0 -> 49278 bytes
+|    25 files changed, 366 insertions(+), 14 deletions(-)
+| 
+* commit ba0b3459f0f82d3907c4e294da2bff54ad0ad1c3
+| Author: Adi Harif <adi.harif@campus.technion.ac.il>
+| Date:   Sun Aug 4 19:43:54 2024 +0300
+| 
+|     [bugfix] Changes utilities function to iterate over size_t variable instead of unsigned int
+| 
+|  Utilities.cpp | 6 +++---
+|  1 file changed, 3 insertions(+), 3 deletions(-)
+| 
+* commit ecc9258c6f2aa2c9c091a7738587e206586a1c14
+| Author: Adi Harif <adi.harif@campus.technion.ac.il>
+| Date:   Sun Aug 4 08:16:59 2024 +0300
+| 
+|     [format] Changes tests eol format to LF instead of CRLF
+| 
+|  tests/test1.events  | 8 ++++----
+|  tests/test1.players | 4 ++--
+|  tests/test2.events  | 6 +++---
+|  tests/test2.players | 4 ++--
+|  tests/test3.events  | 8 ++++----
+|  tests/test3.players | 2 +-
+|  6 files changed, 16 insertions(+), 16 deletions(-)
+| 
+* commit 6d0b58bcecef6fc2291c09f654a978cc382c3e31
+| Author: AdiHarif <adi.harif@campus.technion.ac.il>
+| Date:   Mon Jul 29 21:47:45 2024 +0300
+| 
+|     Adds supplied files
+| 
+|  Events/Event.h       |  14 +++++
+|  MatamStory.cpp       |  74 +++++++++++++++++++++++++
+|  MatamStory.h         |  55 +++++++++++++++++++
+|  Players/Player.h     |  51 +++++++++++++++++
+|  Utilities.cpp        | 117 +++++++++++++++++++++++++++++++++++++++
+|  Utilities.h          | 146 +++++++++++++++++++++++++++++++++++++++++++++++++
+|  main.cpp             |  40 ++++++++++++++
+|  tests/test1.events   |   5 ++
+|  tests/test1.expected |  96 ++++++++++++++++++++++++++++++++
+|  tests/test1.players  |   3 +
+|  tests/test2.events   |   4 ++
+|  tests/test2.expected |   1 +
+|  tests/test2.players  |   3 +
+|  tests/test3.events   |   5 ++
+|  tests/test3.expected |   1 +
+|  tests/test3.players  |   2 +
+|  16 files changed, 617 insertions(+)
+| 
+* commit beadb33ed4c7dd2da9d4078b9de6253232c67a46
+  Author: AdiHarif <adi.harif@campus.technion.ac.il>
+  Date:   Mon Jul 29 21:46:59 2024 +0300
+  
+      Initial Commit - Adds README.md file
+  
+   README.md | 7 +++++++
+   1 file changed, 7 insertions(+)
