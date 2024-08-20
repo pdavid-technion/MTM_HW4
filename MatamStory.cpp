@@ -15,6 +15,12 @@
             str.substr(first, last - first + 1);
 }
 
+bool isAlphaString(const std::string& str) {
+    return std::all_of(str.begin(), str.end(), [](unsigned char c) {
+        return std::isalpha(c);
+    });
+}
+
 std::string MatamStory::extractNextWord(std::string& line) {
 
       line = trim(line);
@@ -67,23 +73,62 @@ std::shared_ptr<CharacterFactory> MatamStory::createCharacterFactory(const strin
     throw std::invalid_argument("Invalid character type");
 }
 
-std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::string& line) {
-    int packSize = std::stoi(extractNextWord(line));
+std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::istream& eventsStream) {
+    int packSize;
+    if(eventsStream >> packSize){
+        auto pack = std::make_unique<MonsterPack>();
+    } else {
+       throw std::invalid_argument(EVENT_FILE_ERROR); 
+    }
+
     auto pack = std::make_unique<MonsterPack>();
 
     for (int i = 0; i < packSize; ++i) {
-        std::string word = extractNextWord(line);
-        
-        if (!word.compare(PACK)) {
-            auto subPack = parseMonsterPack(line);
+        std::string word;
+        eventsStream >> word;
+
+        // Trim and check if the word is empty
+        if (word.empty()) {
+            throw std::invalid_argument(EVENT_FILE_ERROR);
+        }
+
+        if (word == PACK) {
+            // Recursively parse a subPack
+            auto subPack = parseMonsterPack(eventsStream);
             pack->addMonster(std::move(subPack));
-        } else {
+
+        } else if (word == SNAIL || word == BALROG || word == SLIME) {
+            // Create a monster from the type
             auto monster = createMonsterFromType(word);
-            pack->addMonster(std::move(monster));
+            if (monster) {
+                pack->addMonster(std::move(monster));
+            } else {
+                throw std::invalid_argument(EVENT_FILE_ERROR);
+            }
+        } else {
+           throw std::invalid_argument(EVENT_FILE_ERROR);
         }
     }
 
     return pack;
+    // int packSize = std::stoi(extractNextWord(line));
+    // auto pack = std::make_unique<MonsterPack>();
+
+    // for (int i = 0; i < packSize; ++i) {
+    //     std::string word = extractNextWord(line);
+        
+    //     if (!word.compare(PACK)) {
+    //         auto subPack = parseMonsterPack(line);
+    //         pack->addMonster(std::move(subPack));
+    //     } else if(!word.compare(SNAIL) || !word.compare(SLIME) || !word.compare(BALROG)) {
+    //         auto monster = createMonsterFromType(word);
+    //         pack->addMonster(std::move(monster));
+    //     } else {
+    //         throw std::invalid_argument(EVENT_FILE_ERROR);
+    //     }
+    // }
+
+    // return pack;
 }
 
 std::vector<Player*> MatamStory::sortPlayersByScore() {
@@ -100,40 +145,60 @@ std::vector<Player*> MatamStory::sortPlayersByScore() {
     return sortedPlayers;
 }
 
-void MatamStory::readEventsFile(std::istream& eventsStream)
-{
-    std::string line;
 
-    while (std::getline(eventsStream, line)) {
-
-        std::string firstWord = extractNextWord(line);
-        if (!firstWord.compare(PACK)) {
-            
-            auto pack = parseMonsterPack(line);
+void MatamStory::readEventsFile(std::istream& eventsStream){
+     std::string word;
+    while (eventsStream >> word) {
+        if (word == PACK) {
+            auto pack = parseMonsterPack(eventsStream);
             eventsList.push_back(std::make_unique<MonsterEvent>(std::move(pack)));
-
-        } else if (!firstWord.compare(SOLAR_ECLIPSE)) {
-
+        } else if (word == SOLAR_ECLIPSE) {
             eventsList.push_back(std::make_unique<SolarEclipse>());
-
-        } else if (!firstWord.compare(POTIONS_MERCHANT)) {
-
+        } else if (word == POTIONS_MERCHANT) {
             eventsList.push_back(std::make_unique<PotionsMerchant>());
-
-        } else if(!firstWord.compare(SNAIL)  || (!firstWord.compare(SLIME)) || 
-                (!firstWord.compare(BALROG))) {
-
-            eventsList.push_back(std::make_unique<MonsterEvent>(firstWord));
-
-        }
-        else {
+        } else if (word == SNAIL || word == BALROG || word == SLIME) {
+            eventsList.push_back(std::make_unique<MonsterEvent>(word));
+        } else {
             throw std::invalid_argument(EVENT_FILE_ERROR);
         }
     }
 
-    if(eventsList.size() < 2 ){
+    // Ensure there are enough events
+    if (eventsList.size() < 2) {
         throw std::invalid_argument(EVENT_FILE_ERROR);
     }
+//     std::string line;
+
+//     while (std::getline(eventsStream, line)) {
+
+//         std::string firstWord = extractNextWord(line);
+//         if (!firstWord.compare(PACK)) {
+            
+//             auto pack = parseMonsterPack(line);
+//             eventsList.push_back(std::make_unique<MonsterEvent>(std::move(pack)));
+
+//         } else if (!firstWord.compare(SOLAR_ECLIPSE)) {
+
+//             eventsList.push_back(std::make_unique<SolarEclipse>());
+
+//         } else if (!firstWord.compare(POTIONS_MERCHANT)) {
+
+//             eventsList.push_back(std::make_unique<PotionsMerchant>());
+
+//         } else if(!firstWord.compare(SNAIL)  || (!firstWord.compare(SLIME)) || 
+//                 (!firstWord.compare(BALROG))) {
+
+//             eventsList.push_back(std::make_unique<MonsterEvent>(firstWord));
+
+//         }
+//         else {
+//             throw std::invalid_argument(EVENT_FILE_ERROR);
+//         }
+//     }
+
+//     if(eventsList.size() < 2 ){
+//         throw std::invalid_argument(EVENT_FILE_ERROR);
+//     }
 }
 
 void MatamStory::readPlayersFile(std::istream& playersStream)
@@ -144,6 +209,10 @@ void MatamStory::readPlayersFile(std::istream& playersStream)
 
         std::string job, character;
         std::string name = extractNextWord(line);
+        
+        if(name.length() < 3 || name.length() > 15 || !isAlphaString(name)){
+            throw std::invalid_argument(PLAYER_FILE_ERROR);
+        }
 
         job = extractNextWord(line);
 
@@ -180,9 +249,22 @@ void MatamStory::readPlayersFile(std::istream& playersStream)
 
 MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream)
     : m_turnIndex(1) {
+        // MatamStory::readEventsFile(eventsStream);
+        // MatamStory::readPlayersFile(playersStream);
+         try {
+        // Attempt to read the events file first
         MatamStory::readEventsFile(eventsStream);
-        MatamStory::readPlayersFile(playersStream);
+        } catch (const std::invalid_argument& e) {
+        // If an exception occurs while reading the events, rethrow it
+        if (std::string(e.what()) == EVENT_FILE_ERROR) {
+            throw;  // Re-throw the exception so that it takes precedence
+        }
+        // Otherwise, continue to check for the player file error
     }
+
+    // If no exception occurred (or a non-event exception occurred), continue
+    MatamStory::readPlayersFile(playersStream);
+}
 
 void MatamStory::playTurn(Player& player) {
     if (eventsList.empty()) return;

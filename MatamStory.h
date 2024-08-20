@@ -34,7 +34,7 @@ private:
     std::unique_ptr<Monster> createMonsterFromType(const std::string& type);
     std::shared_ptr<JobFactory> createJobFactory(const std::string& jobType);
     std::shared_ptr<CharacterFactory> createCharacterFactory(const std::string& characterType);
-    std::unique_ptr<MonsterPack> parseMonsterPack(std::string& line);
+    std::unique_ptr<MonsterPack> parseMonsterPack(std::istream& eventsStream);
     std::vector<Player*> sortPlayersByScore();
 
 public:

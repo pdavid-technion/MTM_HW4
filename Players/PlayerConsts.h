@@ -53,4 +53,4 @@ constexpr const char* SOLAR_ECLIPSE = "SolarEclipse";
 constexpr const char* POTIONS_MERCHANT = "PotionsMerchant";
 
 constexpr const char* PLAYER_FILE_ERROR = "Invalid Players File";
-constexpr const char* EVENT_FILE_ERROR = "Invalid Event File";
+constexpr const char* EVENT_FILE_ERROR = "Invalid Events File";
