@@ -13,7 +13,6 @@ class MonsterEvent: public Event {
          std::unique_ptr<Monster> monster;  
 
     public:
-        //MonsterEvent(std::unique_ptr<Monster> monster):monster(std::move(monster)){}
         explicit MonsterEvent(std::unique_ptr<Monster> newMonster);
         explicit MonsterEvent(std::unique_ptr<MonsterPack> newMonsterPack);
         explicit MonsterEvent(Monster* monsterPtr); 

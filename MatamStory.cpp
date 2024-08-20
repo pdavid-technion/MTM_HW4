@@ -11,7 +11,8 @@
  std::string trim(const std::string& str) {
     size_t first = str.find_first_not_of(" \n\r\t");
     size_t last = str.find_last_not_of(" \n\r\t");
-    return (first == std::string::npos || last == std::string::npos) ? "" : str.substr(first, last - first + 1);
+    return (first == std::string::npos || last == std::string::npos) ? "" : 
+            str.substr(first, last - first + 1);
 }
 
 std::string MatamStory::extractNextWord(std::string& line) {
@@ -55,7 +56,7 @@ std::shared_ptr<JobFactory> MatamStory::createJobFactory(const std::string& jobT
     throw std::invalid_argument("Invalid job type");
 }
 
-std::shared_ptr<CharacterFactory> MatamStory::createCharacterFactory(const std::string& characterType) {
+std::shared_ptr<CharacterFactory> MatamStory::createCharacterFactory(const string& characterType){
     if (!characterType.compare(RESPONSIBLE)) {
 
         return std::make_shared<ResponsibleFactory>();
@@ -69,8 +70,10 @@ std::shared_ptr<CharacterFactory> MatamStory::createCharacterFactory(const std::
 std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::string& line) {
     int packSize = std::stoi(extractNextWord(line));
     auto pack = std::make_unique<MonsterPack>();
+
     for (int i = 0; i < packSize; ++i) {
         std::string word = extractNextWord(line);
+        
         if (!word.compare(PACK)) {
             auto subPack = parseMonsterPack(line);
             pack->addMonster(std::move(subPack));
@@ -105,6 +108,7 @@ void MatamStory::readEventsFile(std::istream& eventsStream)
 
         std::string firstWord = extractNextWord(line);
         if (!firstWord.compare(PACK)) {
+            
             auto pack = parseMonsterPack(line);
             eventsList.push_back(std::make_unique<MonsterEvent>(std::move(pack)));
 
@@ -116,18 +120,19 @@ void MatamStory::readEventsFile(std::istream& eventsStream)
 
             eventsList.push_back(std::make_unique<PotionsMerchant>());
 
-        } else if(!firstWord.compare(SNAIL)  || (!firstWord.compare(SLIME)) || (!firstWord.compare(BALROG))) {
+        } else if(!firstWord.compare(SNAIL)  || (!firstWord.compare(SLIME)) || 
+                (!firstWord.compare(BALROG))) {
 
             eventsList.push_back(std::make_unique<MonsterEvent>(firstWord));
 
         }
         else {
-            throw std::invalid_argument("Invalid Event File");
+            throw std::invalid_argument(EVENT_FILE_ERROR);
         }
     }
 
     if(eventsList.size() < 2 ){
-        throw std::invalid_argument("Invalid Event File");
+        throw std::invalid_argument(EVENT_FILE_ERROR);
     }
 }
 
@@ -151,7 +156,7 @@ void MatamStory::readPlayersFile(std::istream& playersStream)
 
         }
         else {
-            throw std::invalid_argument("Invalid Players File");
+            throw std::invalid_argument(PLAYER_FILE_ERROR);
         }
 
         character = extractNextWord(line);
@@ -162,14 +167,14 @@ void MatamStory::readPlayersFile(std::istream& playersStream)
 
         }
         else {
-            throw std::invalid_argument("Invalid Players File");
+            throw std::invalid_argument(PLAYER_FILE_ERROR);
         }
         Player player(name, jobFactory, characterFactory);
         playersList.push_back(player);
     }
 
     if(playersList.size() > 6 || playersList.size() < 2 ){
-        throw std::invalid_argument("Invalid Players File");
+        throw std::invalid_argument(PLAYER_FILE_ERROR);
     }
 }
 

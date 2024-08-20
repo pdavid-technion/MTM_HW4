@@ -9,7 +9,8 @@ class MonsterPackFactory: public MonsterFactory {
     
     public:
         MonsterPackFactory() = default;
-        MonsterPackFactory(const std::vector<std::unique_ptr<MonsterFactory>>& factories): factories(factories){}
+        MonsterPackFactory(const std::vector<std::unique_ptr<MonsterFactory>>& factories):
+            factories(factories){}
 
         std::unique_ptr<Monster> createMonster() const override{
             auto pack = std::make_unique<MonsterPack>();
