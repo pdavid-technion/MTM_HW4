@@ -110,8 +110,12 @@ void Player::closeEncounter(){
     this->healthPoints = std::max(0, this->healthPoints - CLOSE_ENCOUNTER_DAMAGE);
 }
 
-void Player::applyDarknessConfusion(){
+bool Player::applyDarknessConfusion(){
+    if(this->force  == 0){
+        return false;
+    }
     this->force = std::max(0, this->force - SOLAR_ECLIPSE_EXPOSURE);
+    return true;
 }
 
 void Player::applyDarknessMagic(){
@@ -122,10 +126,15 @@ int Player::getMaxHealthPoints(){
     return this->job->getMaxHealthPoints();
 }
 
-void Player::buyPotions(int potionAmount){
-    this->healthPoints = std::min(this->getMaxHealthPoints(),
+bool Player::buyPotions(int potionAmount){
+    if( this->getCoins() >= potionAmount * POTION_COST){
+        this->healthPoints = std::min(this->getMaxHealthPoints(),
                                   this->getHealthPoints() + (potionAmount * POTION_HEALTHPOINTS));
-    this->job->setCoins(this->getCoins() - potionAmount * POTION_COST);
+        this->job->setCoins(this->getCoins() - potionAmount * POTION_COST);
+        return true;
+    }
+    return false;
+    
 }
 
 string Player::combatMonster(Monster &monster){

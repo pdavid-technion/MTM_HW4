@@ -5,8 +5,8 @@
 #include "PlayerConsts.h"
 
 string RiskTaking::reactToPotionsMerchant( Player& player) const{
-    if(player.getHealthPoints() < LOW_HEALTH_THRESHOLD ){
-        player.buyPotions(RISK_TAKING_POTION); 
+    if( player.getHealthPoints() < LOW_HEALTH_THRESHOLD && 
+        player.buyPotions(RISK_TAKING_POTION)){
         return getPotionsPurchaseMessage(player,RISK_TAKING_POTION);  
     }
     return getPotionsPurchaseMessage(player,0);

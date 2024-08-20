@@ -2,6 +2,7 @@
 #include <Player.h>
 #include <../Events/Monster.h>
 #include <Utilities.h>
+#include <iostream>
 
 Job::Job(int maxHealthPoints, int coins) :maxHealthPoints(maxHealthPoints), coins(coins){}
 
@@ -10,8 +11,10 @@ int Job::calculateCombatPower(int force, int level) const {
 }
 
 string Job::reactToSolarEclipse( Player& player) const {
-        player.applyDarknessConfusion();
-        return getSolarEclipseMessage(player,-1);
+        if(player.applyDarknessConfusion()){
+          return getSolarEclipseMessage(player,-1);
+        }
+        return getSolarEclipseMessage(player,0);
 }
 
 

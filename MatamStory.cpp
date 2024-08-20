@@ -74,7 +74,7 @@ std::shared_ptr<CharacterFactory> MatamStory::createCharacterFactory(const strin
 }
 
 std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::istream& eventsStream) {
-    int packSize;
+    unsigned int packSize;
     if(eventsStream >> packSize){
         auto pack = std::make_unique<MonsterPack>();
     } else {
@@ -83,7 +83,7 @@ std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::istream& eventsSt
 
     auto pack = std::make_unique<MonsterPack>();
 
-    for (int i = 0; i < packSize; ++i) {
+    for (unsigned int i = 0; i < packSize; ++i) {
         std::string word;
         eventsStream >> word;
 
@@ -111,24 +111,6 @@ std::unique_ptr<MonsterPack> MatamStory::parseMonsterPack(std::istream& eventsSt
     }
 
     return pack;
-    // int packSize = std::stoi(extractNextWord(line));
-    // auto pack = std::make_unique<MonsterPack>();
-
-    // for (int i = 0; i < packSize; ++i) {
-    //     std::string word = extractNextWord(line);
-        
-    //     if (!word.compare(PACK)) {
-    //         auto subPack = parseMonsterPack(line);
-    //         pack->addMonster(std::move(subPack));
-    //     } else if(!word.compare(SNAIL) || !word.compare(SLIME) || !word.compare(BALROG)) {
-    //         auto monster = createMonsterFromType(word);
-    //         pack->addMonster(std::move(monster));
-    //     } else {
-    //         throw std::invalid_argument(EVENT_FILE_ERROR);
-    //     }
-    // }
-
-    // return pack;
 }
 
 std::vector<Player*> MatamStory::sortPlayersByScore() {
@@ -167,82 +149,41 @@ void MatamStory::readEventsFile(std::istream& eventsStream){
     if (eventsList.size() < 2) {
         throw std::invalid_argument(EVENT_FILE_ERROR);
     }
-//     std::string line;
-
-//     while (std::getline(eventsStream, line)) {
-
-//         std::string firstWord = extractNextWord(line);
-//         if (!firstWord.compare(PACK)) {
-            
-//             auto pack = parseMonsterPack(line);
-//             eventsList.push_back(std::make_unique<MonsterEvent>(std::move(pack)));
-
-//         } else if (!firstWord.compare(SOLAR_ECLIPSE)) {
-
-//             eventsList.push_back(std::make_unique<SolarEclipse>());
-
-//         } else if (!firstWord.compare(POTIONS_MERCHANT)) {
-
-//             eventsList.push_back(std::make_unique<PotionsMerchant>());
-
-//         } else if(!firstWord.compare(SNAIL)  || (!firstWord.compare(SLIME)) || 
-//                 (!firstWord.compare(BALROG))) {
-
-//             eventsList.push_back(std::make_unique<MonsterEvent>(firstWord));
-
-//         }
-//         else {
-//             throw std::invalid_argument(EVENT_FILE_ERROR);
-//         }
-//     }
-
-//     if(eventsList.size() < 2 ){
-//         throw std::invalid_argument(EVENT_FILE_ERROR);
-//     }
 }
 
-void MatamStory::readPlayersFile(std::istream& playersStream)
-{
-    std::string line;
+void MatamStory::readPlayersFile(std::istream& playersStream){
 
-    while (std::getline(playersStream, line)) {
+    std::string name, job, character;
 
-        std::string job, character;
-        std::string name = extractNextWord(line);
-        
-        if(name.length() < 3 || name.length() > 15 || !isAlphaString(name)){
+    while (playersStream >> name >> job >> character) {
+        // Validate the player's name
+        if (name.length() < 3 || name.length() > 15 || !isAlphaString(name)) {
             throw std::invalid_argument(PLAYER_FILE_ERROR);
         }
 
-        job = extractNextWord(line);
-
+        // Validate and create the job factory
         std::shared_ptr<JobFactory> jobFactory = nullptr;
-        std::shared_ptr<CharacterFactory> characterFactory = nullptr;
-
-        if(!job.compare(WARRIOR) || !job.compare(MAGICIAN) || !job.compare(ARCHER)) {
-
+        if (job == WARRIOR || job == MAGICIAN || job == ARCHER) {
             jobFactory = createJobFactory(job);
-
-        }
-        else {
+        } else {
             throw std::invalid_argument(PLAYER_FILE_ERROR);
         }
 
-        character = extractNextWord(line);
-
-        if(!character.compare(RESPONSIBLE) || !character.compare(RISK_TAKING)) {
-
+        // Validate and create the character factory
+        std::shared_ptr<CharacterFactory> characterFactory = nullptr;
+        if (character == RESPONSIBLE || character == RISK_TAKING) {
             characterFactory = createCharacterFactory(character);
-
-        }
-        else {
+        } else {
             throw std::invalid_argument(PLAYER_FILE_ERROR);
         }
+
+        // Create and store the player
         Player player(name, jobFactory, characterFactory);
         playersList.push_back(player);
     }
 
-    if(playersList.size() > 6 || playersList.size() < 2 ){
+    // Ensure the correct number of players
+    if (playersList.size() > 6 || playersList.size() < 2) {
         throw std::invalid_argument(PLAYER_FILE_ERROR);
     }
 }

@@ -30,8 +30,10 @@ string Warrior::printJobName() const{
 }
 
 string Warrior::reactToSolarEclipse( Player& player) const {
-     player.applyDarknessConfusion();
-     return getSolarEclipseMessage(player,-1);
+       if(player.applyDarknessConfusion()){
+          return getSolarEclipseMessage(player,-1);
+        }
+        return getSolarEclipseMessage(player,0);
 }
 
 std::unique_ptr<Job> Warrior::clone() const {

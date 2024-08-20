@@ -46,10 +46,10 @@ public:
     void winMonster(int loot);
     void loseToMonster(int damage);
     void closeEncounter();
-    void applyDarknessConfusion();
+    bool applyDarknessConfusion();
     void applyDarknessMagic();
     int getMaxHealthPoints();
-    void buyPotions(int potionAmount);
+    bool buyPotions(int potionAmount);
     string combatMonster(Monster& monster);
     string reactToSolarEclipse();
     string reactToPotionsMerchant();
